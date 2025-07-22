@@ -1,37 +1,18 @@
 <%-- 
-    Document   : TestJSP
-    Created on : Jul 22, 2025, 12:16:24 PM
-    Author     : Arthur Scharf
+    Document   : index
+    Created on : Jul 22, 2025, 2:34:54 PM
+    Author     : User
 --%>
 
-<%@page import="java.util.ArrayList"%> <%-- Import statement --%>
-<%@page import='businesslayer.TestDataGenerator' %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP-Page</title>
+        <title>JSP Page</title>
     </head>
     <body>
-    <center>
-        <%-- Including other files. Makes things cleaner --%>
-        
-        <%@ include file="/views/header.jsp" %>
-        
-        <%--  <jsp:include page="/TestServlet" /> dynamic incldue --%>
-        
-        <%
-            // ArrayList<String> results = (ArrayList<String>)request.getAttribute("results");
-            ArrayList<String> results = TestDataGenerator.execute();
-            for (String str : results)
-            {
-                out.println("<p>" + str + "</p>");
-            }
-        %>
-        
-        <%@ include file="/views/footer.jsp" %> 
-        
-    </center>
+        <h1>Hello World!</h1>
+        <a href="controller/testview">Click Me!</a>
     </body>
 </html>
