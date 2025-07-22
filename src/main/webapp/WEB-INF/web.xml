@@ -4,16 +4,31 @@
    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
    version="4.0">
     
+    
+    
     <servlet>
         <servlet-name>Controller</servlet-name>
         <servlet-class>viewlayer.FrontController</servlet-class>
     </servlet>
+        
+    <!-- src/main/webapp == The root of the runtime -->
+    <servlet>
+        <servlet-name>TestJSP</servlet-name>
+        <jsp-file>/views/TestJSP.jsp</jsp-file>
+    </servlet>
+
+    
     
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/Controller</url-pattern>
+        <url-pattern>/Controller/*</url-pattern>
     </servlet-mapping>
     
+
+    <servlet-mapping>
+        <servlet-name>TestJSP</servlet-name>
+        <url-pattern>/TestJSP</url-pattern>
+    </servlet-mapping>
     
     <session-config>
         <session-timeout>
