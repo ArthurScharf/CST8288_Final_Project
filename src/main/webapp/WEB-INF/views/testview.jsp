@@ -11,6 +11,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- 
+            I don't know why, but the application fails to interpret the path 
+            from the root of the project 'webapp'. Absolute path is required...
+        -->
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/CST8288_Final_Project/css/styles.css"/>
         <title>JSP-Page</title>
     </head>
     <body>

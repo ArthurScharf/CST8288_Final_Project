@@ -1,0 +1,15 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 22, 2025, 2:58:42 PM
+    Author     : User
+*/
+
+body {
+    background-color: #f0f8ff; /* A light aliceblue color */
+    font-family: Arial, sans-serif; /* Example: set a default font */
+    margin: 0; /* Remove default body margin */
+    padding: 20px; /* Add some padding around the content */
+}
