@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="false" %> <!-- I don't want sessions for pages that aren't related to login [Arthur] -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,6 +15,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <a href="auth/testview">Click Me!</a>
+        <a href="loginView">Click Me!</a>
     </body>
 </html>

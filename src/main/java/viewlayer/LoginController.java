@@ -1,13 +1,12 @@
-package viewlayer;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package viewlayer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,16 +16,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @authors Arthur Scharf
+ * @author User
  */
-public class AuthenticationController extends HttpServlet 
-{
+public class LoginController extends HttpServlet {
 
-//    void initSession(HttpSession session, )
-//    {
-//        session.setAttribute
-//    }
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,31 +31,24 @@ public class AuthenticationController extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
-        // Either created a session, or retrieved an active session. 'true' means "create new session if none exist".
-        HttpSession session = request.getSession(true);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         
-        // If username and password are set, the client is logged in 
-        if (session.getAttribute("username") == null || session.getAttribute("passsword") == null) // Has a session been created?
-        {   
-            getServletContext().getNamedDispatcher("localhost:8080/CST8288_Final_Project/loginView").forward(request, response);
-            return;
-        }
-        
-        // TODO: User Authentication
-
-        String[] pathInfo = request.getPathInfo().split("/");
-        RequestDispatcher dispatcher = getServletContext().getNamedDispatcher(pathInfo[1]);
-        if (dispatcher != null)
+        // -- Checking to see if we can login -- //
+        if (username == null || password == null)
         {
-            dispatcher.forward(request, response);
-            return;
-        } else {
-            
-            getServletContext().setAttribute("errorMessage", "Invalid Path : " + pathInfo[1]);
-            getServletContext().getNamedDispatcher("error").forward(request, response);
+            response.sendRedirect("loginView");
             return;
         }
-    }//~ doRequest
+        // TODO: Check authentication
+        
+        // -- Modifying the current session and redirecting -- //
+        HttpSession session = request.getSession(true); 
+        session.setAttribute("username", username);
+        session.setAttribute("password", password);
+
+        // TODO: Redirect to home page for that user
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -74,8 +60,8 @@ public class AuthenticationController extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
