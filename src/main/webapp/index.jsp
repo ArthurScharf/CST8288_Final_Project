@@ -14,6 +14,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <a href="controller/testview">Click Me!</a>
+        <a href="auth/testview">Click Me!</a>
     </body>
 </html>

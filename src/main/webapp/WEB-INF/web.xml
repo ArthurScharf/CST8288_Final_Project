@@ -4,22 +4,22 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
+    
     <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>viewlayer.FrontController</servlet-class>
+        <servlet-name>Authentication</servlet-name>
+        <servlet-class>viewlayer.AuthenticationController</servlet-class>
     </servlet>
+    
     
     <servlet>
         <servlet-name>testview</servlet-name>
         <jsp-file>/WEB-INF/views/testview.jsp</jsp-file>
     </servlet>
-       
+    <!-- Urls a client can request. Notice there is only one -->
     <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/controller/*</url-pattern>
+        <servlet-name>Authentication</servlet-name>
+        <url-pattern>/auth/*</url-pattern>
     </servlet-mapping>
-    
-    
     <session-config>
         <session-timeout>
             30

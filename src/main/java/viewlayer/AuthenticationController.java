@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @authors Arthur Scharf
  */
-public class FrontController extends HttpServlet {
+public class AuthenticationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +34,6 @@ public class FrontController extends HttpServlet {
         String[] pathInfo = request.getPathInfo().split("/");
         
         RequestDispatcher dispatcher = getServletContext().getNamedDispatcher(pathInfo[1]);
-        
         if (dispatcher != null)
         {
             dispatcher.forward(request, response);

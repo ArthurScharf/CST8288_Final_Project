@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- 
+        <!--
             I don't know why, but the application fails to interpret the path 
             from the root of the project 'webapp'. Absolute path is required...
         -->
