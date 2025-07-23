@@ -42,12 +42,16 @@ public class LoginController extends HttpServlet {
         }
         // TODO: Check authentication
         
+        
         // -- Modifying the current session and redirecting -- //
         HttpSession session = request.getSession(true); 
         session.setAttribute("username", username);
         session.setAttribute("password", password);
-
-        // TODO: Redirect to home page for that user
+        
+        // TODO --> Move the user back to a home page
+        // response.sendRedirect("testview"); // This won't work because redirects use URLs, 
+        // which we don't have because 
+        getServletContext().getNamedDispatcher("testview").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
