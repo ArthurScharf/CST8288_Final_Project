@@ -4,30 +4,46 @@
  */
 package viewlayer;
 
+import dataaccesslayer.VehicleDAO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import transportobjects.VehicleDTO;
 
 /**
  * Web application lifecycle listener.
  *
- * @author User
+ * @author Arthur Scharf
  */
-public class ObserverContextListener implements ServletContextListener {
+public class InitRAMContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) 
     {
+        // -- Test Data -- //
         ArrayList<String> testAttribute = new ArrayList<>();
         testAttribute.add("Hello World");
         testAttribute.add("Goodbye Moon");
         testAttribute.add("Ugh");
         sce.getServletContext().setAttribute("testAttribute", testAttribute);
+        
+        // -- Vehicles on the road -- //
+        
+        VehicleDAO dao = new VehicleDAO();
+        try {
+            ArrayList<VehicleDTO> activeVehicles = dao.getAll();
+            sce.getServletContext().setAttribute("activeVehicles", activeVehicles);
+        } catch (SQLException e)
+        {
+            // TODO: Handle this better? Use exceptions that crash the program gracefully?
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) 
     {
-        
+        // TODO: Final update should be sent to database upon shutdown
     }
 }

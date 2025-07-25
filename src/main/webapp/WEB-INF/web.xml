@@ -5,7 +5,7 @@
     </welcome-file-list>
     <listener>
         <description>ServletContextListener</description>
-        <listener-class>viewlayer.ObserverContextListener</listener-class>
+        <listener-class>viewlayer.InitRAMContextListener</listener-class>
     </listener>
     <servlet>
         <servlet-name>Auth</servlet-name>

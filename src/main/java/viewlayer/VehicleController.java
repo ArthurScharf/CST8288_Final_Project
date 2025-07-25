@@ -31,6 +31,11 @@ public class VehicleController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
+        /* -- TODO --
+            1. Observers
+            2. Dummy vehicle updates
+        */
+        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicleTest.jsp");
         dispatcher.forward(request, response);
     }
