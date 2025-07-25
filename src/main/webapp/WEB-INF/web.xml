@@ -4,8 +4,6 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
-    
-    
     <servlet>
         <servlet-name>Auth</servlet-name>
         <servlet-class>viewlayer.AuthenticationController</servlet-class>
@@ -20,7 +18,7 @@
         <servlet-name>loginView</servlet-name>
         <jsp-file>/loginView.jsp</jsp-file>
     </servlet>
-    
+   
     
     <servlet>
         <servlet-name>error</servlet-name>
@@ -39,12 +37,16 @@
         <servlet-class>viewlayer.LoginController</servlet-class>
     </servlet>
     
+    <servlet>
+        <servlet-name>VehicleController</servlet-name>
+        <servlet-class>viewlayer.VehicleController</servlet-class>
+    </servlet>
+    
    
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
-    
     
     <!-- Urls a client can request. Notice there is only one -->
     <servlet-mapping>
@@ -52,13 +54,11 @@
         <url-pattern>/Auth/*</url-pattern>
     </servlet-mapping>
     
-    
     <servlet-mapping>
         <servlet-name>loginView</servlet-name>
         <url-pattern>/loginView</url-pattern>
     </servlet-mapping>
-    
-    
+   
     <session-config>
         <session-timeout>
             30
