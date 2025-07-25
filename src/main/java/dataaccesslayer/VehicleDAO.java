@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import transportobjects.VehicleDTO;
 
 /**
- *
  * @author Arthur Scharf
  */
 public class VehicleDAO implements VehicleDAOInterface
 {
 
+    
     @Override
     public ArrayList<VehicleDTO> getAll() throws SQLException 
     {

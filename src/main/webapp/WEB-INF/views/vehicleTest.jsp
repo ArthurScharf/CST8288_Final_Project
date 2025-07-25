@@ -24,14 +24,9 @@
                 <th>Vehicle Type</th>
                 <th>Max Passengers</th>
                 <th>Total Dist Traveled</th>
-            </tr>
-            
+            </tr>  
         <%
-            ArrayList<String> strings = (ArrayList<String>)application.getAttribute("testAttribute");
             ArrayList<VehicleDTO> vcls = (ArrayList<VehicleDTO>)application.getAttribute("activeVehicles");
-//            out.println(String.format("<p>%s</p>", strings.get(0)));
-//            out.println(String.format("<p>%s</p>", strings.get(1)));
-//            out.println(String.format("<p>%s</p>", strings.get(2)));
             for (VehicleDTO v : vcls)
             {
                 out.println("<tr>");
