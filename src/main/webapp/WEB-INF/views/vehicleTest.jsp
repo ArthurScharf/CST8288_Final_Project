@@ -4,6 +4,7 @@
     Author     : Arthur Scharf
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,12 @@
     <body>
         <%@ include file="/WEB-INF/views/header.jsp" %>
         <br><br>
-        <h1>Vehicle Test</h1>
+        <%
+            ArrayList<String> strings = (ArrayList<String>)application.getAttribute("testAttribute");
+            out.println(String.format("<p>%s</p>", strings.get(0)));
+            out.println(String.format("<p>%s</p>", strings.get(1)));
+            out.println(String.format("<p>%s</p>", strings.get(2)));
+        %>
         <br><br>
         <%@ include file="/WEB-INF/views/footer.jsp" %>
     </body>
