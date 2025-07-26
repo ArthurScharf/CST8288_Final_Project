@@ -31,5 +31,12 @@ public interface NotificationDAOInterface {
      * @throws SQLException 
      */
     public boolean delete(int notificationId) throws SQLException;
+    
+    /**
+     * @param notificationType
+     * @return List of notifications of type: (maintenance, fuel, break)
+     * @throws SQLException 
+     */
+    public ArrayList<NotificationDTO> getByType(String notificationType) throws SQLException;
 }
 
