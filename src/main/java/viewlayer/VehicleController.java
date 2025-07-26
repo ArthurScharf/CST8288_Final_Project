@@ -4,7 +4,7 @@
  */
 package viewlayer;
 
-import businesslayer.VehicleServices;
+import businesslayer.VehicleService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.Instant;
@@ -20,7 +20,7 @@ import transportobjects.VehicleDTO;
 
 /**
  *
- * @author User
+ * @author Arthur Scharf
  */
 // @WebServlet(name = "VehicleController", urlPatterns = {"/VehicleController"})
 public class VehicleController extends HttpServlet {
@@ -41,9 +41,8 @@ public class VehicleController extends HttpServlet {
         */
         // -- Dummy distance change code for vehicles changes distances -- //
         ServletContext context = request.getServletContext();
-        context.getAttribute("lastInstant");
         try {
-            VehicleServices.increaseDistanceTraveled(
+            VehicleService.increaseDistanceTraveled(
                     (ArrayList<VehicleDTO>) context.getAttribute("activeVehicles"),  
                     (Instant) context.getAttribute("lastInstant")
             );

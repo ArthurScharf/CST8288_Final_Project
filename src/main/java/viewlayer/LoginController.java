@@ -4,6 +4,7 @@
  */
 package viewlayer;
 
+import businesslayer.AuthenticationService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletContext;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import transportobjects.OperatorDTO;
 
 /**
  *
@@ -40,17 +42,36 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("loginView");
             return;
         }
-        // TODO: Check authentication
         
-        
-        // -- Modifying the current session and redirecting -- //
+         // -- Authentication -- //
+        OperatorDTO dto = null;
+        try {
+            dto = AuthenticationService.authenticate(username, password);
+        } catch (Exception e)
+        {
+            request.getServletContext().setAttribute("errorMessage", "" + e.getMessage());
+            request.getServletContext().getNamedDispatcher("error").forward(request, response);
+            return;
+        }
+        if (dto == null)
+        {
+            // Incorrect credentials or account doesn't exist
+            request.getServletContext().setAttribute("errorMessage", "Invalid credentials OR account doesn't exist");
+            response.sendRedirect("error.jsp");
+            return;
+        }
+
+        // -- Modifying/Creating current session and redirecting -- //
         HttpSession session = request.getSession(true); 
+        session.setAttribute("id", dto.getId());
+        session.setAttribute("firstName", dto.getFirstName());
+        session.setAttribute("lastName", dto.getLastName());
+        session.setAttribute("role", dto.getRole());
         session.setAttribute("username", username);
         session.setAttribute("password", password);
-        
+
         // TODO --> Move the user back to a home page
-        // response.sendRedirect("testview"); // This won't work because redirects use URLs, 
-        // which we don't have because 
+        // response.sendRedirect("testview"); // This won't work because redirects use URLs and testView is hidden from clients
         getServletContext().getNamedDispatcher("testview").forward(request, response);
     }
 

@@ -17,8 +17,10 @@ import transportobjects.VehicleDTO;
  */
 public class VehicleDAO implements VehicleDAOInterface
 {
-
-    
+    /**
+     * @return ArrayList of all vehicles in the database
+     * @throws SQLException 
+     */
     @Override
     public ArrayList<VehicleDTO> getAll() throws SQLException 
     {
@@ -41,23 +43,80 @@ public class VehicleDAO implements VehicleDAOInterface
             }
         } catch (SQLException e)
         {
-            throw new SQLException("SQL Exception while retreiving all vehicles", e);
+            throw new SQLException("SQL Exception while retreiving all vehicles" + e.getMessage(), e);
         }
         return dtos;
     }
 
+    /**
+     * 
+     * @param dto
+     * @return true if vehicle was successfully created
+     * @throws SQLException 
+     */
     @Override
-    public boolean create(VehicleDTO dto) throws SQLException 
+    public void create(VehicleDTO dto) throws SQLException 
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "INSERT INTO Vehicle (VehicleNumber, Type, MaximumPassengers, TotalDistanceTraveled) "
+                     + "VALUES (?, ?, ?, ?)";
+
+        Connection conn = DataSource.INSTANCE.getConnection();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query))
+        {
+
+            stmt.setString(1, dto.getVehicleNumber());         // VehicleNumber (String)
+            stmt.setString(2, dto.getType());                  // Type (String)
+            stmt.setInt(3, dto.getMaximumPassengers());        // MaximumPassengers (int)
+            stmt.setDouble(4, dto.getTotalDistanceTraveled()); // Assuming getTotalDistanceTraveled() returns double
+
+            int numRowsAffected = stmt.executeUpdate();
+
+            if (numRowsAffected != 1) 
+            {
+                throw new SQLException("EXCEPTION VehicleDAO::create ... Expected 1 row affected, but got " + numRowsAffected);
+            } 
+        } catch (SQLException e)
+        {
+            throw e;
+        }
     }
 
     @Override
     public VehicleDTO get(String vehicleNumber) throws SQLException 
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "SELECT VehicleNumber, Type, MaximumPassengers, TotalDistanceTraveled "
+                     + "FROM Vehicle "
+                     + "WHERE VehicleNumber = ?";
+
+        Connection conn = DataSource.INSTANCE.getConnection();
+
+        VehicleDTO dto = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query))
+        {
+            stmt.setString(1, vehicleNumber);
+
+            try (ResultSet results = stmt.executeQuery())
+            {
+                if (results.next()) 
+                {
+                    dto = new VehicleDTO();
+                    dto.setVehicleNumber(results.getString("VehicleNumber"));
+                    dto.setType(results.getString("Type"));
+                    dto.setMaximumPassengers(results.getInt("MaximumPassengers"));
+                    dto.setTotalDistanceTraveled(results.getFloat("TotalDistanceTraveled"));
+                }
+            }
+        } catch (SQLException e)
+        {
+            throw e;
+        }
+
+        return dto; // Return the populated DTO or null if not found.
     }
 
+    
     @Override
     public boolean update(VehicleDTO dto) throws SQLException 
     {

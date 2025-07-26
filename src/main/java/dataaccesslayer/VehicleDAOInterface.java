@@ -31,10 +31,9 @@ public interface  VehicleDAOInterface
     
     /**
      * @param dto used to create the database object
-     * @return true if vehicle was successfully created
      * @throws SQLException 
      */
-    public boolean create(VehicleDTO dto) throws SQLException;
+    public void create(VehicleDTO dto) throws SQLException;
     
     /**
      * @param vehicleNumber
