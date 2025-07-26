@@ -20,7 +20,7 @@ import transportobjects.VehicleDTO;
 
 /**
  *
- * @author User
+ * @author Arthur Scharf
  */
 // @WebServlet(name = "VehicleController", urlPatterns = {"/VehicleController"})
 public class VehicleController extends HttpServlet {
