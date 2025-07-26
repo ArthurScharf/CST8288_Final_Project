@@ -18,7 +18,7 @@ import transportobjects.VehicleDTO;
  * 
  * @author Arthur Scharf
  */
-public class VehicleServices 
+public class VehicleService 
 {
     public static void increaseDistanceTraveled(ArrayList<VehicleDTO> vcls, Instant lastInstant) throws Exception
     {

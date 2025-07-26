@@ -12,6 +12,16 @@
         <title>JSP Page</title>
     </head>
     <body>
-    <center><h1>Header</h1></center>
+    <center><h1>Header
+        <%
+        Object username = session.getAttribute("username");
+        if (username != null)
+        {
+            out.print(" Hello " + (String)username);
+        } else {
+            out.print(" Not logged in");
+        }
+        %>
+        </h1></center>
     </body>
 </html>

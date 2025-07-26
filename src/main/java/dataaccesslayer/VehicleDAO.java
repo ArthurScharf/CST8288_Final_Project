@@ -43,7 +43,7 @@ public class VehicleDAO implements VehicleDAOInterface
             }
         } catch (SQLException e)
         {
-            throw new SQLException("SQL Exception while retreiving all vehicles", e);
+            throw new SQLException("SQL Exception while retreiving all vehicles" + e.getMessage(), e);
         }
         return dtos;
     }
@@ -74,7 +74,7 @@ public class VehicleDAO implements VehicleDAOInterface
 
             if (numRowsAffected != 1) 
             {
-                throw new SQLException("EXCEPTION VehicleDAO::create --> Expected 1 row affected, but got " + numRowsAffected);
+                throw new SQLException("EXCEPTION VehicleDAO::create ... Expected 1 row affected, but got " + numRowsAffected);
             } 
         } catch (SQLException e)
         {
