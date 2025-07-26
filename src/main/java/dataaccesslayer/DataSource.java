@@ -79,5 +79,5 @@ public enum DataSource
         info[2] = password;
     }
     
-    Connection getConnection() { return connection; }
+    public Connection getConnection() { return connection; }
 }

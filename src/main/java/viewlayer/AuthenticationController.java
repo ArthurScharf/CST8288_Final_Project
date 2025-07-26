@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * @deprecated 
  * @authors Arthur Scharf
  */
 public class AuthenticationController extends HttpServlet 
@@ -46,8 +46,7 @@ public class AuthenticationController extends HttpServlet
         {   
             getServletContext().getNamedDispatcher("localhost:8080/CST8288_Final_Project/loginView").forward(request, response);
             return;
-        }
-        
+        }        
         // TODO: User Authentication
 
         String[] pathInfo = request.getPathInfo().split("/");

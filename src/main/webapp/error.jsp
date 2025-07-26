@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+    <%@include file="WEB-INF/views/header.jsp" %>
     <%
         String errorMessage = (String)application.getAttribute("errorMessage");
 
@@ -21,6 +22,7 @@
         } else {
             out.println("<h1>ERROR MESSAGE NOT SET</h1>");
         }
-        %>
+    %>
+    <%@include file="WEB-INF/views/footer.jsp" %>
     </body>
 </html>
