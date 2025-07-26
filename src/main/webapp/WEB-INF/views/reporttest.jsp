@@ -4,6 +4,8 @@
     Author     : Sina Paslar
 --%>
 
+<%@page import="businesslayer.report.Report"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,24 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%@ include file="/WEB-INF/views/header.jsp" %>
+        <%
+            Report repo = Report.builder().addCost(10).addEnergyConsumption(20).addLocationTracking("Piont 1").build();
+            double cost = repo.getCost();
+            out.println("<p> cost: "+ cost + "</p>");
+            
+            
+            
+            
+            %>
+        
+        
+        
+        
+        
+        
+        
+        
+        <%@ include file="/WEB-INF/views/footer.jsp" %> 
     </body>
 </html>

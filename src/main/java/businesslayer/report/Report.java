@@ -30,9 +30,31 @@ public class Report {
         this.cost = cost;
     
     }
+
+    public String getLocationTracking() {
+        return locationTracking;
+    }
+
+    public int getEnergyConsumption() {
+        return energyConsumption;
+    }
+
+    public List<String> getTransitMaintenance() {
+        return transitMaintenance;
+    }
+
+    public HashMap<String, String> getOperatorPerformance() {
+        return operatorPerformance;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+    
+    
     
     //bulds a new object of ReportBuilder based on the passed parameters form the constructor
-    public ReportBuilder builder (){
+    public static ReportBuilder builder (){
         
         return new ReportBuilder();
         

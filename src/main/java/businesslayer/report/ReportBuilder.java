@@ -59,7 +59,7 @@ public class ReportBuilder {
     }
 
     //This method builds a Report object based on the added parameters
-    public Report builder(){
+    public Report build(){
         return new Report(locationTracking, energyConsumption,
             transitMaintenance, operatorPerformance,
             cost);
