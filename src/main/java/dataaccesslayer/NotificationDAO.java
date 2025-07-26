@@ -69,4 +69,63 @@ public class NotificationDAO implements NotificationDAOInterface {
         }
     }
     
+    
+      /**
+     * @param notificationId
+     * @return true if notification was deleted
+     * @throws SQLException 
+     */
+    @Override
+    public boolean delete(int notificationId) throws SQLException {
+        String query = "DELETE FROM notification WHERE notification_id = ?";
+        Connection conn = DataSource.INSTANCE.getConnection();
+        
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, notificationId);
+            
+            int numRowsAffected = stmt.executeUpdate();
+            
+            if (numRowsAffected == 1) return true;
+            
+            else if (numRowsAffected == 0) return false;
+            
+            else throw new SQLException("EXCEPTION NotificationDAO::delete --> more than one row affected");
+            
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+    
+    
+     /**
+     * @param notificationType
+     * @return List of notifications of type: (maintenance, fuel, break)
+     * @throws SQLException 
+     */
+    @Override
+    public ArrayList<NotificationDTO> getByType(String notificationType) throws SQLException {
+        String query = "SELECT * FROM notification WHERE notification_type = ?";
+        Connection conn = DataSource.INSTANCE.getConnection();
+        ArrayList<NotificationDTO> notifications = new ArrayList<>();
+        
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, notificationType);
+            
+            try (ResultSet results = stmt.executeQuery()) {
+                while (results.next()) {
+                    NotificationDTO dto = new NotificationDTO();
+                    dto.setNotificationId(results.getInt("notification_id"));
+                    dto.setVehicleId(results.getString("vehicle_id"));
+                    dto.setNotificationType(results.getString("notification_type"));
+                    dto.setData(results.getString("data"));
+                    notifications.add(dto);
+                }
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+        
+        return notifications;
+    }
+    
 }
