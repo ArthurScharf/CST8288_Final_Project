@@ -46,3 +46,4 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 src/main/resources/database.properties
+src/main/resources/database.properties
