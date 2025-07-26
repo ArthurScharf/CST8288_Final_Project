@@ -93,7 +93,6 @@ public class OperatorDAO implements OperatorDAOInterface
             
             try (ResultSet results = stmt.executeQuery())
             {
-                boolean bOneRecordReturned = false;
                 if (results.next()) {
                     dto = new OperatorDTO();
                     dto.setId(results.getInt("OperatorID"));
@@ -115,10 +114,9 @@ public class OperatorDAO implements OperatorDAOInterface
         return dto;
     }
 
-       @Override
+    @Override
     public OperatorDTO get(String username) throws SQLException // Changed parameter name for clarity
     {
-
         String query = "SELECT OperatorID, FirstName, LastName, Role, Username, Password "
                      + "FROM OPERATORS "
                      + "WHERE Username = ?";
@@ -132,7 +130,6 @@ public class OperatorDAO implements OperatorDAOInterface
             
             try (ResultSet results = stmt.executeQuery())
             {
-                boolean bOneRecordReturned = false;
                 if (results.next()) {
                     dto = new OperatorDTO();
                     dto.setId(results.getInt("OperatorID"));

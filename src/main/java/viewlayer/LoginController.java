@@ -42,35 +42,37 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("loginView");
             return;
         }
-        // -- Authentication -- //
+        
+         // -- Authentication -- //
+        OperatorDTO dto = null;
         try {
-            OperatorDTO dto = AuthenticationService.authenticate(username, password);
-            if (dto == null)
-            {
-                // Incorrect credentials or account doesn't exist
-                request.getServletContext().setAttribute("errorMessage", "Invalid credentials OR account doesn't exist");
-                response.sendRedirect("error.jsp");
-                return;
-            }
-
-            // -- Modifying/Creating current session and redirecting -- //
-            HttpSession session = request.getSession(true); 
-            session.setAttribute("id", dto.getId());
-            session.setAttribute("firstName", dto.getFirstName());
-            session.setAttribute("lastName", dto.getLastName());
-            session.setAttribute("role", dto.getRole());
-            session.setAttribute("username", username);
-            session.setAttribute("password", password);
-
-            // TODO --> Move the user back to a home page
-            // response.sendRedirect("testview"); // This won't work because redirects use URLs and testView is hidden from clients
-            getServletContext().getNamedDispatcher("testview").forward(request, response);
-            return;
+            dto = AuthenticationService.authenticate(username, password);
         } catch (Exception e)
         {
-            request.getServletContext().setAttribute("errorMessage", "OOPS " + e.getMessage());
-            response.sendRedirect("error.jsp");
+            request.getServletContext().setAttribute("errorMessage", "" + e.getMessage());
+            request.getServletContext().getNamedDispatcher("error").forward(request, response);
+            return;
         }
+        if (dto == null)
+        {
+            // Incorrect credentials or account doesn't exist
+            request.getServletContext().setAttribute("errorMessage", "Invalid credentials OR account doesn't exist");
+            response.sendRedirect("error.jsp");
+            return;
+        }
+
+        // -- Modifying/Creating current session and redirecting -- //
+        HttpSession session = request.getSession(true); 
+        session.setAttribute("id", dto.getId());
+        session.setAttribute("firstName", dto.getFirstName());
+        session.setAttribute("lastName", dto.getLastName());
+        session.setAttribute("role", dto.getRole());
+        session.setAttribute("username", username);
+        session.setAttribute("password", password);
+
+        // TODO --> Move the user back to a home page
+        // response.sendRedirect("testview"); // This won't work because redirects use URLs and testView is hidden from clients
+        getServletContext().getNamedDispatcher("testview").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

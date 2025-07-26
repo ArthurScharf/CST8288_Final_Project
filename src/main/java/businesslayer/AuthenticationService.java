@@ -32,13 +32,13 @@ public class AuthenticationService
         OperatorDAO dao = new OperatorDAO();
         try {
             OperatorDTO dto = dao.get(username);
-            if (dto.getUsername().equals(username) && dto.getPassword().equals(password))
+            if (dto != null && dto.getPassword().equals(password))
             { 
                 return dto; // Authentication Succeeded
             }
-        } catch (SQLException e)
+        } catch (Exception e)
         {
-            throw new Exception("EXCEPTION AuthenticationService::authenticate ... While retreiving dto\n"+e.getMessage());
+            throw new Exception("EXCEPTION AuthenticationService::authenticate ... While retreiving dto\n " + e.getMessage());
         }
         return null; // Authentication failed
     }
