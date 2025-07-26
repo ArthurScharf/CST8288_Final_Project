@@ -4,15 +4,36 @@
  */
 package businesslayer.report;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  *
  * @author Sina Paslar
  */
 public class Report {
     
+    //Fileds are subjected to be chanegd based in the project proccess
+    private String locationTracking;
+    private int energyConsumption;
+    private List<String> transitMaintenance;
+    private HashMap<String, String> operatorPerformance;
+    private int cost;
+            
+    public Report(String locationTracking, int energyConsumption,
+            List<String> transitMaintenance, HashMap<String, String> operatorPerformance,
+            int cost){
+        this.locationTracking = locationTracking;
+        this.energyConsumption = energyConsumption;
+        this.transitMaintenance = transitMaintenance;
+        this.operatorPerformance = operatorPerformance;
     
+    }
     
-    public Report(){
+    //bulds a new object of ReportBuilder based on the passed parameters form the constructor
+    public ReportBuilder build (){
+        
+        return new ReportBuilder();
         
     }
 }
