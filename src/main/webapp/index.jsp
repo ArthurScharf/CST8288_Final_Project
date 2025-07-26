@@ -16,5 +16,6 @@
     <body>
         <h1>Hello World!</h1>
         <a href="loginView">Click Me!</a>
+        <a href="VehicleController">Vehicles</a>
     </body>
 </html>
