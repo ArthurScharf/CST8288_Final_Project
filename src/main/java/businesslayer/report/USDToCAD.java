@@ -1,0 +1,24 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package businesslayer.report;
+
+/**
+ * This class represents the UAD to CAD conversion strategy.
+ * @author Sina Paslar
+ */
+public class USDToCAD implements ICurrencyStrategy {
+    private final double dailyRate = 1.37;
+
+    /**
+     * Converts a value based on the implemented conversion strategy.
+     * @param amount the input value
+     * @return the converted result
+     */
+    @Override
+    public double convert(double amount) {
+        return amount * dailyRate;
+    }
+    
+}
