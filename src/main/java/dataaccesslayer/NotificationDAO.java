@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.PreparedStatement;
 import transportobjects.NotificationDTO;
 /**
  *
@@ -17,6 +18,10 @@ import transportobjects.NotificationDTO;
  */
 public class NotificationDAO implements NotificationDAOInterface {
     
+    /**
+     * @return ArrayList of all notifications in the database
+     * @throws SQLException 
+     */
     @Override
     public ArrayList<NotificationDTO> getAll() throws SQLException {
         String query = "SELECT * FROM notification";
@@ -40,4 +45,28 @@ public class NotificationDAO implements NotificationDAOInterface {
         }
         return notifications;
     }
+    /**
+     * @param dto notification to create in database
+     * @throws SQLException 
+     */
+    @Override
+    public void create(NotificationDTO dto) throws SQLException {
+        String query = "INSERT INTO notification (vehicle_id, notification_type, data) VALUES (?, ?, ?)";
+        Connection conn = DataSource.INSTANCE.getConnection();
+        
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, dto.getVehicleId());
+            stmt.setString(2, dto.getNotificationType());
+            stmt.setString(3, dto.getData());
+
+            int numRowsAffected = stmt.executeUpdate();
+
+            if (numRowsAffected != 1) {
+                throw new SQLException("EXCEPTION NotificationDAO::create --> Expected 1 row affected, but got " + numRowsAffected);
+            } 
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+    
 }
