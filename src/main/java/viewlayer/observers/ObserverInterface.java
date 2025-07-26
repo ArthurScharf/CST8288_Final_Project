@@ -13,4 +13,7 @@ package viewlayer.observers;
 public interface ObserverInterface 
 {
     public void execute();
+    
+    
+    public void HelloWOrld();
 }
