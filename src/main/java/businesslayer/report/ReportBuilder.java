@@ -18,14 +18,20 @@ public class ReportBuilder {
     private int energyConsumption;
     private List<String> transitMaintenance;
     private HashMap<String, String> operatorPerformance;
-    private int cost;
+    private double cost;
+    
+    //Currency Strategy
+    private CurrecnyStrategyContext currencyContext;
     
     public ReportBuilder addLocationTracking(String locationTracking)
     {
         this.locationTracking = locationTracking;
         return this;
-    }    
+    }
     
+    public void setStrategy(ICurrencyStrategy currencyStrategy){
+        currencyContext.setStrategy(currencyStrategy);
+    }
     
     public ReportBuilder addEnergyConsumption(int energyConsumption) {
     this.energyConsumption = energyConsumption;
@@ -42,8 +48,13 @@ public class ReportBuilder {
         return this;
     }
 
-    public ReportBuilder addCost(int cost) {
-        this.cost = cost;
+    public ReportBuilder addCost(double cost) {
+        //Choosing between USDToCAD or CADToUSD shoudl be implemented somehow later on
+        if (currencyContext != null){
+            this.cost = currencyContext.currencyConvertor(cost);
+        } else{
+            this.cost = cost;  
+        }
         return this;
     }
 

@@ -18,15 +18,16 @@ public class Report {
     private int energyConsumption;
     private List<String> transitMaintenance;
     private HashMap<String, String> operatorPerformance;
-    private int cost;
+    private double cost;
             
     public Report(String locationTracking, int energyConsumption,
             List<String> transitMaintenance, HashMap<String, String> operatorPerformance,
-            int cost){
+            double cost){
         this.locationTracking = locationTracking;
         this.energyConsumption = energyConsumption;
         this.transitMaintenance = transitMaintenance;
         this.operatorPerformance = operatorPerformance;
+        this.cost = cost;
     
     }
     
