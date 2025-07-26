@@ -67,12 +67,7 @@ public class VehicleDAO implements VehicleDAOInterface
                 + "MaximumPassengers = ?, "
                 + "TotalDistanceTraveled = ? "
                 + "WHERE VehicleNumber = ? ";
-        /*
-        1 = num
-        2 = type
-        3. max
-        4. dist
-        */
+        
         Connection conn = DataSource.INSTANCE.getConnection();
         
         try (PreparedStatement stmt = conn.prepareStatement(query))

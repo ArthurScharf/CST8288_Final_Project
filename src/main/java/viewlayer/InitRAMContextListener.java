@@ -22,7 +22,8 @@ import javax.servlet.ServletContext;
  * 
  * @author Arthur Scharf
  */
-public class InitRAMContextListener implements ServletContextListener {
+public class InitRAMContextListener implements ServletContextListener
+{
 
     
     @Override
