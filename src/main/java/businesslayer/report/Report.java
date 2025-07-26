@@ -19,16 +19,17 @@ public class Report {
     private List<String> transitMaintenance;
     private HashMap<String, String> operatorPerformance;
     private double cost;
+    private ICurrencyStrategy currencyStrategy;
             
     public Report(String locationTracking, int energyConsumption,
             List<String> transitMaintenance, HashMap<String, String> operatorPerformance,
-            double cost){
+            double cost, ICurrencyStrategy currencyStrategy){
         this.locationTracking = locationTracking;
         this.energyConsumption = energyConsumption;
         this.transitMaintenance = transitMaintenance;
         this.operatorPerformance = operatorPerformance;
         this.cost = cost;
-    
+        this.currencyStrategy = currencyStrategy;
     }
 
     public String getLocationTracking() {

@@ -4,6 +4,8 @@
     Author     : Sina Paslar
 --%>
 
+<%@page import="businesslayer.report.CADToUSD"%>
+<%@page import="businesslayer.report.ICurrencyStrategy"%>
 <%@page import="businesslayer.report.Report"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,7 +18,8 @@
     <body>
         <%@ include file="/WEB-INF/views/header.jsp" %>
         <%
-            Report repo = Report.builder().addCost(10).addEnergyConsumption(20).addLocationTracking("Piont 1").build();
+            ICurrencyStrategy currencyStrategy = new CADToUSD();
+            Report repo = Report.builder().addCost(10, 2).addEnergyConsumption(20).addLocationTracking("Point 1").build();
             double cost = repo.getCost();
             out.println("<p> cost: "+ cost + "</p>");
             

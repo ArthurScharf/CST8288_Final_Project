@@ -26,6 +26,7 @@ public class CurrecnyStrategyContext {
      * Sets a new currency conversion strategy.
      *
      * @param convertor the new strategy to use for currency conversion
+     * @return 
      */
     public void setStrategy (ICurrencyStrategy convertor){
         this.convertor = convertor;
