@@ -5,6 +5,7 @@
 package dataaccesslayer;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -58,9 +59,39 @@ public class VehicleDAO implements VehicleDAOInterface
     }
 
     @Override
-    public boolean update(String vehicleNumber) throws SQLException 
+    public boolean update(VehicleDTO dto) throws SQLException 
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "UPDATE Vehicle "
+                + "SET VehicleNumber = ?, "
+                + "Type = ?, "
+                + "MaximumPassengers = ?, "
+                + "TotalDistanceTraveled = ? "
+                + "WHERE VehicleNumber = ? ";
+        /*
+        1 = num
+        2 = type
+        3. max
+        4. dist
+        */
+        Connection conn = DataSource.INSTANCE.getConnection();
+        
+        try (PreparedStatement stmt = conn.prepareStatement(query))
+        {
+            stmt.setString(1, dto.getVehicleNumber());
+            stmt.setString(2, dto.getType());
+            stmt.setInt(3, dto.getMaximumPassengers());
+            stmt.setFloat(4, dto.getTotalDistanceTraveled());
+            stmt.setString(5, dto.getVehicleNumber());
+            
+            int numRowsAffected = stmt.executeUpdate();
+            
+            if (numRowsAffected == 1) return true;
+            else if (numRowsAffected == 0) return false;
+            else throw new SQLException("EXCEPTION VehicleDAO::update --> more than one row affected");
+        } catch (SQLException e)
+        {
+            throw e; // Does this need to be here?
+        }
     }
 
     @Override

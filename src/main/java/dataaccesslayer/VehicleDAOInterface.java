@@ -48,7 +48,7 @@ public interface  VehicleDAOInterface
      * @return true if vehicle was updated
      * @throws SQLException 
      */
-    public boolean update(String vehicleNumber) throws SQLException;
+    public boolean update(VehicleDTO dto) throws SQLException;
     
     /**
      * @param vehicleNumber

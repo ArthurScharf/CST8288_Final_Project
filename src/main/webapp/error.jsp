@@ -17,7 +17,7 @@
 
         if (errorMessage != null)
         {
-            out.println("<h1>"+errorMessage+"</h1>");
+            out.println("<p>"+errorMessage+"</p>");
         } else {
             out.println("<h1>ERROR MESSAGE NOT SET</h1>");
         }

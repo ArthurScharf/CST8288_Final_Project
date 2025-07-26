@@ -39,6 +39,10 @@
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VehicleController</servlet-name>
+        <url-pattern>/VehicleController</url-pattern>
+    </servlet-mapping>
     <!-- Urls a client can request. Notice there is only one -->
     <servlet-mapping>
         <servlet-name>Auth</servlet-name>

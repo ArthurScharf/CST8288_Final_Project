@@ -4,20 +4,25 @@
  */
 package viewlayer;
 
+import businesslayer.VehicleServices;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Instant;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import transportobjects.VehicleDTO;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "VehicleController", urlPatterns = {"/VehicleController"})
+// @WebServlet(name = "VehicleController", urlPatterns = {"/VehicleController"})
 public class VehicleController extends HttpServlet {
 
     /**
@@ -32,9 +37,22 @@ public class VehicleController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         /* -- TODO --
-            1. Observers
-            2. Dummy vehicle updates
+            Observers
         */
+        // -- Dummy distance change code for vehicles changes distances -- //
+        ServletContext context = request.getServletContext();
+        context.getAttribute("lastInstant");
+        try {
+            VehicleServices.increaseDistanceTraveled(
+                    (ArrayList<VehicleDTO>) context.getAttribute("activeVehicles"),  
+                    (Instant) context.getAttribute("lastInstant")
+            );
+        } catch (Exception e)
+        {
+            context.setAttribute("errorMessage", e.getMessage());
+            response.sendRedirect("error.jsp");
+            return;
+        }
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicleTest.jsp");
         dispatcher.forward(request, response);
