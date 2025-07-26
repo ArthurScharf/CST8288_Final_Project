@@ -31,7 +31,7 @@ public class Report {
     }
     
     //bulds a new object of ReportBuilder based on the passed parameters form the constructor
-    public ReportBuilder build (){
+    public ReportBuilder builder (){
         
         return new ReportBuilder();
         
