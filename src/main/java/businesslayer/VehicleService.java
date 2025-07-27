@@ -20,6 +20,15 @@ import transportobjects.VehicleDTO;
  */
 public class VehicleService 
 {
+    /**
+     * Helper function which simulates the updates vehicles would send as their distance traveled changes.
+     * In a real system, this would be a Servlet of it's own, receiving updates live and 
+     * processing them
+     * 
+     * @param vcls
+     * @param lastInstant
+     * @throws Exception 
+     */
     public static void increaseDistanceTraveled(ArrayList<VehicleDTO> vcls, Instant lastInstant) throws Exception
     {
         // -- Calculating delta time -- //
@@ -34,6 +43,9 @@ public class VehicleService
             // TODO: Implement vehicle speed specific distance changes
             for (VehicleDTO v : vcls)
             {
+                /*
+                    Check for overridden limitations
+                */
                 v.setTotalDistanceTraveled((float) (v.getTotalDistanceTraveled() + (deltaSeconds * 13.0))); // Buses are 50km/h speeds
                 // -- Updating Vehicles in Database -- //
                 /*

@@ -28,7 +28,7 @@ public class VehicleDTO implements Serializable
      */
     private float maintainanceDistance;
     
-    
+  
     
     public VehicleDTO()
     {

@@ -6,13 +6,11 @@ package viewlayer;
 
 import businesslayer.VehicleService;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.Instant;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,12 +20,10 @@ import transportobjects.VehicleDTO;
  *
  * @author Arthur Scharf
  */
-// @WebServlet(name = "VehicleController", urlPatterns = {"/VehicleController"})
-public class VehicleController extends HttpServlet {
-
+public class VehicleController extends HttpServlet 
+{
     /**
-     * Handles requests for vehicle queries. Must be used for vehicle observers to trigger, and 
-     * for dummy vehicle movement to work
+     * Handles requests for vehicle queries
      *
      * @param request servlet request
      * @param response servlet response
@@ -36,9 +32,6 @@ public class VehicleController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
-        /* -- TODO --
-            Observers
-        */
         // -- Dummy distance change code for vehicles changes distances -- //
         ServletContext context = request.getServletContext();
         try {
@@ -52,7 +45,6 @@ public class VehicleController extends HttpServlet {
             response.sendRedirect("error.jsp");
             return;
         }
-        
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicleTest.jsp");
         dispatcher.forward(request, response);
     }
@@ -93,5 +85,4 @@ public class VehicleController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
