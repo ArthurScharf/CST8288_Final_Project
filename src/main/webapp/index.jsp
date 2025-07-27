@@ -13,10 +13,8 @@
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="http://localhost:8080/CST8288_Final_Project/css/styles.css"/>
     </head>
+    <jsp:include page="/WEB-INF/views/header.jsp" />
     <body>
-        <h1>Hello World!</h1>
-        <a href="home">Home</a>
-        <a href="loginView">Click Me!</a>
-        <a href="VehicleController">Vehicles</a>
+        <h1>Index</h1>
     </body>
 </html>

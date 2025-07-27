@@ -24,6 +24,7 @@ String role = (obj == null) ? "" : (String)obj;
         <a href="home">Home</a>
         <%if ("Manager".equals(role)) { %> <%-- Are we logged in? --%>
             <a href="VehicleController">Vehicles</a>
+            <a href="home">Reports</a>
         <%} else if ("Operator".equals(role)) { %>
             <a>Operator Actions</a>
         <%} else {%>
