@@ -1,27 +1,35 @@
 <%-- 
     Document   : header.jsp
     Created on : Jul 22, 2025, 12:19:05 PM
-    Author     : User
+    Author     : Arthur Scharf
 --%>
+
+
+
+<%-- Is this session for a logged in user? --%>
+<% 
+Object obj = session.getAttribute("role");
+String role = (obj == null) ? "" : (String)obj;
+%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href="http://localhost:8080/CST8288_Final_Project/css/styles.css"/>
     </head>
-    <body>
-    <center><h1>Header
-        <%
-        Object username = session.getAttribute("username");
-        if (username != null)
-        {
-            out.print(" Hello " + (String)username);
-        } else {
-            out.print(" Not logged in");
-        }
-        %>
-        </h1></center>
-    </body>
+    <header class="banner">
+    <nav>
+        <a href="home">Home</a>
+        <%if ("Manager".equals(role)) { %> <%-- Are we logged in? --%>
+            <a href="VehicleController">Vehicles</a>
+        <%} else if ("Operator".equals(role)) { %>
+            <a>Operator Actions</a>
+        <%} else {%>
+            <a href="loginView">Log in</a>
+        <%}%>
+    </nav>
+    </header>
+
 </html>

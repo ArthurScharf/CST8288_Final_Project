@@ -12,4 +12,43 @@ body {
     font-family: Arial, sans-serif; /* Example: set a default font */
     margin: 0; /* Remove default body margin */
     padding: 20px; /* Add some padding around the content */
+    text-align: center;
+    margin-top: 60px;
+}
+
+
+.banner {
+    position: fixed;  /* Makes the banner stick to the top */
+    top: 0;          /* Aligns it to the very top */
+    left: 0;         /* Aligns it to the very left */
+    width: 100%;     /* Makes it span the full width */
+    height: 60px;
+    background-color: #333; /* Dark background */
+    color: white;    /* White text */
+    padding: 15px 20px; /* Some padding for content */
+    box-sizing: border-box; /* Includes padding in the width calculation */
+    z-index: 1000;   /* Ensures it stays on top of other content */
+    text-align: center; /* Center the navigation links */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+}
+
+.banner nav a {
+    color: white;
+    text-decoration: none; /* Remove underline from links */
+    padding: 10px 15px;
+    margin: 0 10px; /* Space between links */
+    display: inline-block; /* Allows padding and margin to work correctly */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.banner nav a:hover {
+    background-color: #555; /* Slightly lighter background on hover */
+    border-radius: 4px;
+}
+
+
+.table {
+        width: 80%; /* Or a fixed pixel value like 600px */
+    margin: 0 auto;
+    border: 1px solid red; /* Add a border to visually confirm its width */
 }

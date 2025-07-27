@@ -1,11 +1,18 @@
 <%-- 
-    Document   : index
-    Created on : Jul 22, 2025, 2:34:54 PM
+    Document   : home
+    Created on : Jul 27, 2025, 4:59:29 PM
     Author     : User
 --%>
 
+
+<%
+Object role = session.getAttribute("role");
+%>
+        
+
+
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page session="false" %> <!-- I don't want sessions for pages that aren't related to login [Arthur] -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,10 +20,8 @@
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="http://localhost:8080/CST8288_Final_Project/css/styles.css"/>
     </head>
+    <jsp:include page="/WEB-INF/views/header.jsp" /> 
     <body>
-        <h1>Hello World!</h1>
-        <a href="home">Home</a>
-        <a href="loginView">Click Me!</a>
-        <a href="VehicleController">Vehicles</a>
+        <p>Hello World<p>
     </body>
 </html>
