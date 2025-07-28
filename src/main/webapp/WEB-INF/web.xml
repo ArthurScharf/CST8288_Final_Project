@@ -28,6 +28,10 @@
         <jsp-file>/loggedIn.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>home</servlet-name>
+        <jsp-file>/home.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>viewlayer.LoginController</servlet-class>
     </servlet>
@@ -60,6 +64,10 @@
         <servlet-name>reporttest</servlet-name>
         <url-pattern>/reporttest.jsp</url-pattern>
     </servlet-mapping>  
+    <servlet-mapping>
+        <servlet-name>home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

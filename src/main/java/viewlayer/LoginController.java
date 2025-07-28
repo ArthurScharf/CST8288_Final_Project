@@ -72,7 +72,8 @@ public class LoginController extends HttpServlet {
 
         // TODO --> Move the user back to a home page
         // response.sendRedirect("testview"); // This won't work because redirects use URLs and testView is hidden from clients
-        getServletContext().getNamedDispatcher("testview").forward(request, response);
+        // getServletContext().getNamedDispatcher("home").forward(request, response);
+        response.sendRedirect("home");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
