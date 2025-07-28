@@ -4,28 +4,26 @@
  */
 package viewlayer;
 
-import businesslayer.VehicleService;
 import dataaccesslayer.NotificationType;
 import java.io.IOException;
-import java.time.Instant;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import observer.Observer;
-import transportobjects.VehicleDTO;
 
 /**
  *
- * @author Arthur Scharf
+ * @author User
  */
-public class VehicleController extends HttpServlet 
-{
+@WebServlet(name = "TestNotificationController", urlPatterns = {"/TestNotificationController"})
+public class TestNotificationController extends HttpServlet {
+
     /**
-     * Handles requests for vehicle queries
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -34,28 +32,26 @@ public class VehicleController extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
-        // -- Dummy distance change code for vehicles changes distances -- //
         ServletContext context = request.getServletContext();
+        
         try {
-            VehicleService.increaseDistanceTraveled(
-                    (ArrayList<VehicleDTO>) context.getAttribute("activeVehicles"),  
-                    (Instant) context.getAttribute("lastInstant")
-            );
-            // -- TEST: Creating test notification -- //
-            Observer fuelObserver = (Observer)context.getAttribute("fuelEvent");
-            fuelObserver.update(NotificationType.FUEL, "V001|Low Fuel, Fool"); // Creates a notificaton in the database
+            Observer fuelObserver = (Observer) context.getAttribute("fuelEvent");
+            if (fuelObserver != null)
+            {
+                fuelObserver.update(NotificationType.FUEL, "test");
+            }
+            // context.getRequestDispatcher("/home").forward(request, response);
+            response.sendRedirect("home");
         } catch (Exception e)
         {
             context.setAttribute("errorMessage", e.getMessage());
-            response.sendRedirect("error.jsp");
-            return;
+            context.getNamedDispatcher("error").forward(request, response);
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicleTest.jsp");
-        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -63,7 +59,8 @@ public class VehicleController extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -90,4 +87,5 @@ public class VehicleController extends HttpServlet
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

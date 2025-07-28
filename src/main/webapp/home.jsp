@@ -6,7 +6,8 @@
 
 
 <%
-Object role = session.getAttribute("role");
+Object obj = session.getAttribute("role");
+String role = (obj == null) ? "" : (String)obj;
 %>
         
 
@@ -22,6 +23,13 @@ Object role = session.getAttribute("role");
     </head>
     <jsp:include page="/WEB-INF/views/header.jsp" /> 
     <body>
-        <p>Hello World<p>
+    <% if ("Manager".equals(role)){ %>
+        <form action="VehicleController" method="POST">
+            <button type="submit" class="submit-button">
+                Perform Action
+            </button>
+        </form>
+    <%}%>
+    
     </body>
 </html>
