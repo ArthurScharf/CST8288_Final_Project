@@ -9,7 +9,7 @@
 <%-- Is this session for a logged in user? --%>
 <% 
 Object obj = session.getAttribute("role");
-String role = (obj == null) ? "" : (String)obj;
+String role = (obj == null) ? null : (String)obj;
 %>
 
 
@@ -30,6 +30,12 @@ String role = (obj == null) ? "" : (String)obj;
         <%} else {%>
             <a href="loginView">Log in</a>
         <%}%>
+        
+        <% if (role != null) { %> 
+            <a href="LogoutController" method="POST">Logout</a>
+        <% } else { %>
+            <a href="register" method="POST">Register</a> 
+        <% } %>
     </nav>
     </header>
 

@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import transportobjects.OperatorDTO;
-
 /**
  * Responsible for Authenticating user credentials.
  * 
@@ -27,6 +26,7 @@ public class AuthenticationService
      * @param password
      * @return Operator DTO for corresponding valid username & password. null, otherwise
      */
+    
     public static OperatorDTO authenticate(String username, String password) throws Exception
     {        
         OperatorDAO dao = new OperatorDAO();
@@ -48,8 +48,8 @@ public class AuthenticationService
 //        return null;
 //    }
 //    
-//    public static boolean logout(String username, String password) throws Exception
-//    {
-//        return false;
-//    }
+    public static boolean logout(String username, String password) throws Exception
+    {
+        return false;
+    }
 }
