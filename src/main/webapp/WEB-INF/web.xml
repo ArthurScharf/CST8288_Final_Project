@@ -40,6 +40,10 @@
         <servlet-class>viewlayer.VehicleController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>viewlayer.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>reporttest</servlet-name>
         <jsp-file>/WEB-INF/views/reporttest.jsp</jsp-file>
     </servlet>
@@ -67,6 +71,10 @@
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/LogoutController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

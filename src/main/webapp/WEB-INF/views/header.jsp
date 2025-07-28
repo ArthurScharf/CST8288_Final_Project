@@ -30,6 +30,12 @@ String role = (obj == null) ? "" : (String)obj;
         <%} else {%>
             <a href="loginView">Log in</a>
         <%}%>
+        
+        <%
+        if (role != null)
+        {
+        %> <a href="LogoutController" methnod="POST">Logout</a>
+        <% } %>
     </nav>
     </header>
 
