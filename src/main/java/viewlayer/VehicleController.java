@@ -5,8 +5,9 @@
 package viewlayer;
 
 import businesslayer.VehicleService;
-import dataaccesslayer.NotificationType;
+import dataaccesslayer.VehicleDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -15,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import observer.Observer;
 import transportobjects.VehicleDTO;
 
 /**
@@ -42,20 +42,18 @@ public class VehicleController extends HttpServlet
                     (Instant) context.getAttribute("lastInstant")
             );
             // -- TEST: Creating test notification -- //
-            Observer fuelObserver = (Observer)context.getAttribute("fuelEvent");
-            fuelObserver.update(NotificationType.FUEL, "V001|Low Fuel, Fool"); // Creates a notificaton in the database
+            // Observer fuelObserver = (Observer)context.getAttribute("fuelEvent");
+            // fuelObserver.update(NotificationType.MAINTENANCE, "V002|Axel Broken"); // Creates a notificaton in the database
         } catch (Exception e)
         {
             context.setAttribute("errorMessage", e.getMessage());
             response.sendRedirect("error.jsp");
             return;
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicleTest.jsp");
-        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** Retrieves vehicles from the database
      *
      * @param request servlet request
      * @param response servlet response
@@ -63,8 +61,11 @@ public class VehicleController extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+    {
         processRequest(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicle.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -76,9 +77,32 @@ public class VehicleController extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    {
         processRequest(request, response);
+        
+        // -- Creating new vehicle -- //
+        String vehicleNumber = request.getParameter("vehicleNumber");
+        String vehicleType   = request.getParameter("vehicleType");
+        int    maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
+        
+        VehicleDTO vcl = new VehicleDTO();
+        vcl.setVehicleNumber(vehicleNumber);
+        vcl.setType(vehicleType);
+        vcl.setMaximumPassengers(maxPassengers);
+        
+        VehicleDAO dao = new VehicleDAO();
+        
+        try {
+            dao.create(vcl);
+        } catch (SQLException e)
+        {
+            request.getServletContext().setAttribute("errorMessage", "Exception VehicleController::doGet -- " + e.getMessage());
+            response.sendRedirect("error");
+            return;
+        }
+        
+        response.sendRedirect("home");
     }
 
     /**

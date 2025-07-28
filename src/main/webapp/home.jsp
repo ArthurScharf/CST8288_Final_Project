@@ -23,13 +23,10 @@ String role = (obj == null) ? "" : (String)obj;
     </head>
     <jsp:include page="/WEB-INF/views/header.jsp" /> 
     <body>
-    <% if ("Manager".equals(role)){ %>
-        <form action="VehicleController" method="POST">
-            <button type="submit" class="submit-button">
-                Perform Action
-            </button>
-        </form>
-    <%}%>
+        
+    <div>
+        <jsp:include page="/WEB-INF/views/notifications.jsp"/>
+    </div>
     
     </body>
 </html>

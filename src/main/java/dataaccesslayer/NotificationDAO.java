@@ -36,22 +36,28 @@ public class NotificationDAO implements NotificationDAOInterface
             
             try (ResultSet results = stmt.executeQuery())
             {
-                // -- Processing Result Set -- //
-                NotificationDTO dto = new NotificationDTO();
-                dto.setId(results.getInt("ID"));
-                dto.setType(
-                    NotificationType.fromString(
-                        results.getString("Type")
-                    )
-                );
-                dto.setData(results.getString("Data"));
+                while (results.next())
+                {
+                   // -- Processing Result Set -- //
+                    NotificationDTO dto = new NotificationDTO();
+                    dto.setId(results.getInt("ID"));
+                    dto.setType(
+                        NotificationType.fromString(
+                            results.getString("Type")
+                        )
+                    );
+                    dto.setData(results.getString("Data"));
+                    dtos.add(dto); 
+                }
+                
             } catch (SQLException e)
             {
-                throw new Exception("NotificationDTO::getByType ... SQL query failed" + e.getMessage());
+                e.printStackTrace();
+                throw new Exception("NotificationDTO::getByType ... SQL query failed: " + e.getMessage(), e);
             }
         } catch (SQLException e)
         {
-            throw new Exception("NotificationDTO::getByType" + e.getMessage());
+            throw new Exception("NotificationDTO::getByType" + e.getMessage(), e);
         }
         // returning null is more consistent with rest of system than returning empty
         return (dtos.size() == 0) ? null : dtos; 
@@ -72,7 +78,7 @@ public class NotificationDAO implements NotificationDAOInterface
             int rowsAffected = stmt.executeUpdate(); 
 
             if (rowsAffected == 0) {
-                throw new Exception("NotificationDAO::create -- No rows affected, notification not created.");
+                throw new Exception("NotificationDTO::create -- No rows affected, notification not created.");
             }
         } catch (SQLException e) {
             throw new Exception("NotificationDAO::create -- SQL operation failed: " + e.getMessage(), e);
