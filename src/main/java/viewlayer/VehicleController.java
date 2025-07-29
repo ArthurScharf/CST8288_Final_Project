@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import transportobjects.VehicleDTO;
+import viewlayer.command.UndoCreateVehicle;
+import viewlayer.command.UndoException;
 
 /**
  *
@@ -80,17 +82,49 @@ public class VehicleController extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         processRequest(request, response);
+     
+        /* -- NOTE --
+        The inclusion of the handling of different types of POST remains a code-smell
+        unless proper control structures are implemented to clean up the code.
+        At the moment of writing, the only functions for post are create vehicle,
+        and undo the last vehicle created. For this reason, I've left it hard coded
+            - Arthur Scharf
+        */
+        
+        // -- Do Undo Vehicle Creation if needed -- //
+        String pathInfo = request.getPathInfo();
+        if (pathInfo != null && pathInfo.split("/")[1].equals("undo"))
+        {
+            try {
+                Object obj = request.getSession(false).getAttribute("UndoCreateVehicle");
+                if (obj == null){
+                    request.getServletContext().getNamedDispatcher("VehicleController").forward(request, response);
+                    return;
+                }
+                // -- Undo Vehicle Creation -- //
+                UndoCreateVehicle undo = (UndoCreateVehicle)obj;
+                undo.execute();
+                request.getServletContext().getNamedDispatcher("VehicleController").forward(request, response);
+                return;
+            } catch (ClassCastException | UndoException e) {
+                request.getServletContext().setAttribute("errorMessage", e.getMessage());
+                response.sendRedirect("error");
+                return;
+            }
+        }
         
         // -- Creating new vehicle -- //
         String vehicleNumber = request.getParameter("vehicleNumber");
         String vehicleType   = request.getParameter("vehicleType");
-        int    maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
+        // int    maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
         
         VehicleDTO vcl = new VehicleDTO();
         vcl.setVehicleNumber(vehicleNumber);
         vcl.setType(vehicleType);
-        vcl.setMaximumPassengers(maxPassengers);
+        // vcl.setMaximumPassengers(maxPassengers);
         
+    
+        // -- Creating Record in Database -- //
         VehicleDAO dao = new VehicleDAO();
         
         try {
@@ -98,11 +132,17 @@ public class VehicleController extends HttpServlet
         } catch (SQLException e)
         {
             request.getServletContext().setAttribute("errorMessage", "Exception VehicleController::doGet -- " + e.getMessage());
-            response.sendRedirect("error");
+            request.getServletContext().getNamedDispatcher("error").forward(request, response);
             return;
         }
         
-        response.sendRedirect("home");
+        // -- Creating undo command -- //
+        // TODO: Prevent this controller serving if user isn't logged in
+        UndoCreateVehicle undo = new UndoCreateVehicle(vcl);
+        request.getSession(false).setAttribute("UndoCreateVehicle", undo);
+        
+        request.getServletContext().getNamedDispatcher("home").forward(request, response);
+        return;
     }
 
     /**

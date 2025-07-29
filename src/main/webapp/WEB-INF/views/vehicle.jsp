@@ -118,7 +118,6 @@
     </head>
     <body>
         <jsp:include page="/WEB-INF/views/header.jsp" />
-
         <!-- Removed deprecated <center> tag, as flexbox handles centering -->
         <div class="main-content-wrapper">
             <!-- Left Side: Vehicle List -->
@@ -151,8 +150,6 @@
                     %>
                 </div>
             </div>
-
-            <!-- TODO: Create endpoint for this -->
             <div class="panel new-vehicle-form-panel">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Add New Vehicle</h2>
                 <form action="VehicleController" method="POST" class="space-y-4">
@@ -168,7 +165,10 @@
                         <label for="maxPassengers">Max Passengers:</label>
                         <input type="number" id="maxPassengers" name="maxPassengers" min="1" required class="focus:ring-blue-500 focus:border-blue-500">
                     </div>
-                    <button type="submit" class="submit-button">Add Vehicle</button>
+                    <button type="submit" class="submit-button">Add Vehicle</button>                   
+                </form>
+                <form action="VehicleController/undo" method="POST">
+                    <button type="submit" class="submit-button">Undo</button>                 
                 </form>
             </div>
         </div>
