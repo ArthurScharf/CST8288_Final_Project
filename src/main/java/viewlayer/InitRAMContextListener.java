@@ -12,6 +12,7 @@ import javax.servlet.ServletContextListener;
 import transportobjects.VehicleDTO;
 import java.time.Instant;
 import javax.servlet.ServletContext;
+import observer.Observer;
 
 
 /**
@@ -40,6 +41,11 @@ public class InitRAMContextListener implements ServletContextListener
         
         // -- Time tracking variable for generating dummy changes in vehicle distance traveled -- //
         context.setAttribute("lastInstant", Instant.now());
+        
+        // -- Event Notification Observers -- //
+        context.setAttribute("maintenanceEvent", new Observer());
+        context.setAttribute("fuelEvent", new Observer());
+        context.setAttribute("breakEvent", new Observer());
         
         // -- Vehicles on the road -- //
         VehicleDAO dao = new VehicleDAO();

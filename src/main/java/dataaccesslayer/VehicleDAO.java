@@ -151,7 +151,19 @@ public class VehicleDAO implements VehicleDAOInterface
     @Override
     public boolean delete(String vehicleNumber) throws SQLException 
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "DELETE FROM Vehicle WHERE VehicleNumber = ?";
+
+        Connection conn = DataSource.INSTANCE.getConnection();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, vehicleNumber);
+
+            int numRowsAffected = stmt.executeUpdate();
+
+            return numRowsAffected == 1; // Returns true if one row was deleted, false otherwise
+        } catch (SQLException e) {
+            throw e; // Re-throw the SQLException for the calling layer to handle
+        }
     }
     
 }

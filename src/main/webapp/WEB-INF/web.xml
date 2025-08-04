@@ -55,6 +55,10 @@
         <servlet-name>reporttest</servlet-name>
         <jsp-file>/WEB-INF/views/reporttest.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>notification</servlet-name>
+        <jsp-file>/WEB-INF/views/notification.jsp</jsp-file>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
@@ -62,6 +66,10 @@
     <servlet-mapping>
         <servlet-name>VehicleController</servlet-name>
         <url-pattern>/VehicleController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VehicleController</servlet-name>
+        <url-pattern>/VehicleController/*</url-pattern>
     </servlet-mapping>
     <!-- Urls a client can request. Notice there is only one -->
     <servlet-mapping>
@@ -80,6 +88,10 @@
         <servlet-name>reporttest</servlet-name>
         <url-pattern>/reporttest.jsp</url-pattern>
     </servlet-mapping>  
+<!--    <servlet-mapping>
+        <servlet-name>notification</servlet-name>
+        <url-pattern>/notification</url-pattern>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>

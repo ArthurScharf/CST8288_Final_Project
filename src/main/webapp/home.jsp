@@ -6,7 +6,8 @@
 
 
 <%
-Object role = session.getAttribute("role");
+Object obj = session.getAttribute("role");
+String role = (obj == null) ? "" : (String)obj;
 %>
         
 
@@ -22,6 +23,10 @@ Object role = session.getAttribute("role");
     </head>
     <jsp:include page="/WEB-INF/views/header.jsp" /> 
     <body>
-        <p>Hello World<p>
+        
+    <div>
+        <jsp:include page="/WEB-INF/views/notifications.jsp"/>
+    </div>
+    
     </body>
 </html>
