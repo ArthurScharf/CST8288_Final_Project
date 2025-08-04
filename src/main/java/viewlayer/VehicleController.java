@@ -115,12 +115,10 @@ public class VehicleController extends HttpServlet
         
         // -- Creating new vehicle -- //
         String vehicleNumber = request.getParameter("vehicleNumber");
-        String vehicleType   = request.getParameter("vehicleType");
         // int    maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
         
         VehicleDTO vcl = new VehicleDTO();
         vcl.setVehicleNumber(vehicleNumber);
-        vcl.setType(vehicleType);
         // vcl.setMaximumPassengers(maxPassengers);
         
     

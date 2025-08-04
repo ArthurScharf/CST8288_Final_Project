@@ -18,7 +18,7 @@ import transportobjects.OperatorDTO;
 
 /**
  *
- * @author User
+ * @author Arthur Scharf
  */
 public class LoginController extends HttpServlet {
 

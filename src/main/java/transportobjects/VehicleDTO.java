@@ -17,31 +17,43 @@ public class VehicleDTO implements Serializable
     
     private String vehicleNumber;
     
-    private String type;
-    
     private int maximumPassengers;
     
     private float totalDistanceTraveled;
+    
+    // Initialized by subtypes
+    private float maintenanceDistance;
     
     /**
      * Distance traveled at which the vehicle must be maintained
      */
     private float maintainanceDistance;
     
+    private int routeID;
+
   
     
     public VehicleDTO()
     {
         this.vehicleNumber = "DEFAULT";
-        this.type = "DEFAULT";
         this.maximumPassengers = -1;
         totalDistanceTraveled = -1;
+        maintenanceDistance = -1;
     }
-    
     
 // ---- ---- ---- ------- ---- ---- ---- //
 // ---- ---- Getters & Setters ---- ---- //
 // ---- ---- ---- ------- ---- ---- ---- //
+    
+    public int getRouteID() {
+        return routeID;
+    }
+    
+    public void setRouteID(int routeID)
+    {
+        this.routeID = routeID;
+    }
+    
     
     public String getVehicleNumber() {
         return vehicleNumber;
@@ -49,10 +61,6 @@ public class VehicleDTO implements Serializable
 
     public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public void setMaximumPassengers(int maximumPassengers) {
@@ -65,10 +73,6 @@ public class VehicleDTO implements Serializable
 
     public void setMaintainanceDistance(float maintainanceDistance) {
         this.maintainanceDistance = maintainanceDistance;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public int getMaximumPassengers() {

@@ -36,7 +36,6 @@ public class VehicleDAO implements VehicleDAOInterface
             {
                 VehicleDTO dto = new VehicleDTO();
                 dto.setVehicleNumber(results.getString("VehicleNumber"));
-                dto.setType(results.getString("Type"));
                 dto.setMaximumPassengers(results.getInt("MaximumPassengers"));
                 dto.setTotalDistanceTraveled(results.getFloat("TotalDistanceTraveled"));
                 dtos.add(dto);
@@ -66,7 +65,6 @@ public class VehicleDAO implements VehicleDAOInterface
         {
 
             stmt.setString(1, dto.getVehicleNumber());         // VehicleNumber (String)
-            stmt.setString(2, dto.getType());                  // Type (String)
             stmt.setInt(3, dto.getMaximumPassengers());        // MaximumPassengers (int)
             stmt.setDouble(4, dto.getTotalDistanceTraveled()); // Assuming getTotalDistanceTraveled() returns double
 
@@ -103,7 +101,6 @@ public class VehicleDAO implements VehicleDAOInterface
                 {
                     dto = new VehicleDTO();
                     dto.setVehicleNumber(results.getString("VehicleNumber"));
-                    dto.setType(results.getString("Type"));
                     dto.setMaximumPassengers(results.getInt("MaximumPassengers"));
                     dto.setTotalDistanceTraveled(results.getFloat("TotalDistanceTraveled"));
                 }
@@ -132,7 +129,6 @@ public class VehicleDAO implements VehicleDAOInterface
         try (PreparedStatement stmt = conn.prepareStatement(query))
         {
             stmt.setString(1, dto.getVehicleNumber());
-            stmt.setString(2, dto.getType());
             stmt.setInt(3, dto.getMaximumPassengers());
             stmt.setFloat(4, dto.getTotalDistanceTraveled());
             stmt.setString(5, dto.getVehicleNumber());
