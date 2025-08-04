@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 
  * @author Arthur Scharf
  */
-public class VehicleDTO implements Serializable
+public abstract class VehicleDTO implements Serializable
 {
     
     private String vehicleNumber;
@@ -86,4 +86,6 @@ public class VehicleDTO implements Serializable
     public float getMaintainanceDistance() {
         return maintainanceDistance;
     }
+    
+    public abstract String serialize();
 }

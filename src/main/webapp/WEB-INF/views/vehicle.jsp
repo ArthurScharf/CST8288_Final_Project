@@ -134,9 +134,9 @@
                                 for (VehicleDTO v : vcls) {
                                     out.println("<div class=\"vehicle-card\">");
                                     out.println("<p><strong>Vehicle Number:</strong> " + v.getVehicleNumber() + "</p>");
-                                    out.println("<p><strong>Vehicle Type:</strong> " + v.getType() + "</p>");
                                     out.println("<p><strong>Max Passengers:</strong> " + v.getMaximumPassengers() + "</p>");
                                     out.println("<p><strong>Total Dist Traveled:</strong> " + String.format("%.2f", v.getTotalDistanceTraveled()) + "</p>");
+                                    out.println("<p><strong>Type Info:</strong> " + v.serialize() + "</p>");
                                     out.println("</div>");
                                 }
                             } else {

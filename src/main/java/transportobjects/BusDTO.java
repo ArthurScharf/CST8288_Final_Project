@@ -55,7 +55,8 @@ public class BusDTO extends VehicleDTO
         return super.toString()+"test";
     }
     
-    public String serialized()
+    @Override
+    public String serialize()
     {
         return "Bus|" 
                 + resourceType + "|" 

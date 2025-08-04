@@ -4,6 +4,7 @@
  */
 package dataaccesslayer;
 
+import businesslayer.VehicleService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ public class VehicleDAO implements VehicleDAOInterface
      * @throws SQLException 
      */
     @Override
-    public ArrayList<VehicleDTO> getAll() throws SQLException 
+    public ArrayList<VehicleDTO> getAll() throws SQLException, Exception
     {
         String query = "SELECT * FROM vehicle";
         
@@ -34,15 +35,21 @@ public class VehicleDAO implements VehicleDAOInterface
         {
             while (results.next()) // Creating DTOs
             {
-                VehicleDTO dto = new VehicleDTO();
-                dto.setVehicleNumber(results.getString("VehicleNumber"));
-                dto.setMaximumPassengers(results.getInt("MaximumPassengers"));
-                dto.setTotalDistanceTraveled(results.getFloat("TotalDistanceTraveled"));
+                VehicleDTO dto = VehicleService.createVehicle(
+                    results.getString("VehicleNumber"),
+                    results.getInt("MaximumPassengers"),
+                    results.getInt("RouteID"),
+                    results.getFloat("TotalDistanceTraveled"),
+                    results.getString("TypeInfo")
+                );
                 dtos.add(dto);
             }
         } catch (SQLException e)
         {
             throw new SQLException("SQL Exception while retreiving all vehicles" + e.getMessage(), e);
+        } catch (Exception e)
+        {
+            throw e;
         }
         return dtos;
     }
@@ -54,9 +61,9 @@ public class VehicleDAO implements VehicleDAOInterface
      * @throws SQLException 
      */
     @Override
-    public void create(VehicleDTO dto) throws SQLException 
+    public void create(VehicleDTO dto, String typeInfo) throws SQLException 
     {
-        String query = "INSERT INTO Vehicle (VehicleNumber, Type, MaximumPassengers, TotalDistanceTraveled) "
+        String query = "INSERT INTO Vehicle (VehicleNumber, TypeInfo, MaximumPassengers, TotalDistanceTraveled) "
                      + "VALUES (?, ?, ?, ?)";
 
         Connection conn = DataSource.INSTANCE.getConnection();
@@ -65,6 +72,7 @@ public class VehicleDAO implements VehicleDAOInterface
         {
 
             stmt.setString(1, dto.getVehicleNumber());         // VehicleNumber (String)
+            stmt.setString(2, typeInfo);                       // Type Info (String)
             stmt.setInt(3, dto.getMaximumPassengers());        // MaximumPassengers (int)
             stmt.setDouble(4, dto.getTotalDistanceTraveled()); // Assuming getTotalDistanceTraveled() returns double
 
@@ -81,9 +89,9 @@ public class VehicleDAO implements VehicleDAOInterface
     }
 
     @Override
-    public VehicleDTO get(String vehicleNumber) throws SQLException 
+    public VehicleDTO get(String vehicleNumber) throws SQLException, Exception
     {
-        String query = "SELECT VehicleNumber, Type, MaximumPassengers, TotalDistanceTraveled "
+        String query = "SELECT VehicleNumber, TypeInfo, MaximumPassengers, TotalDistanceTraveled "
                      + "FROM Vehicle "
                      + "WHERE VehicleNumber = ?";
 
@@ -95,17 +103,23 @@ public class VehicleDAO implements VehicleDAOInterface
         {
             stmt.setString(1, vehicleNumber);
 
-            try (ResultSet results = stmt.executeQuery())
+            try (ResultSet result = stmt.executeQuery())
             {
-                if (results.next()) 
+                if (result.next()) 
                 {
-                    dto = new VehicleDTO();
-                    dto.setVehicleNumber(results.getString("VehicleNumber"));
-                    dto.setMaximumPassengers(results.getInt("MaximumPassengers"));
-                    dto.setTotalDistanceTraveled(results.getFloat("TotalDistanceTraveled"));
+                    dto = VehicleService.createVehicle(
+                            vehicleNumber, 
+                            result.getInt("MaximumPassengers"),
+                            result.getInt("RouteID"), 
+                            result.getFloat("TotalDistanceTraveled"), 
+                            result.getString("TypeInfo")
+                    );
                 }
             }
         } catch (SQLException e)
+        {
+            throw e;
+        } catch (Exception e)
         {
             throw e;
         }
@@ -115,11 +129,11 @@ public class VehicleDAO implements VehicleDAOInterface
 
     
     @Override
-    public boolean update(VehicleDTO dto) throws SQLException 
+    public boolean update(VehicleDTO dto, String typeInfo) throws SQLException, Exception
     {
         String query = "UPDATE Vehicle "
                 + "SET VehicleNumber = ?, "
-                + "Type = ?, "
+                + "TypeInfo = ?, "
                 + "MaximumPassengers = ?, "
                 + "TotalDistanceTraveled = ? "
                 + "WHERE VehicleNumber = ? ";
@@ -129,6 +143,7 @@ public class VehicleDAO implements VehicleDAOInterface
         try (PreparedStatement stmt = conn.prepareStatement(query))
         {
             stmt.setString(1, dto.getVehicleNumber());
+            stmt.setString(2, typeInfo);
             stmt.setInt(3, dto.getMaximumPassengers());
             stmt.setFloat(4, dto.getTotalDistanceTraveled());
             stmt.setString(5, dto.getVehicleNumber());
@@ -161,5 +176,7 @@ public class VehicleDAO implements VehicleDAOInterface
             throw e; // Re-throw the SQLException for the calling layer to handle
         }
     }
+    
+    
     
 }

@@ -5,10 +5,11 @@
 package transportobjects;
 
 /**
- *
- * @author m
+ * String storage convention: "type|batteryAmount|maxBattery|fuelAmount|maxFuel"
+ * @author Mike Sharpe
  */
-public class DieselElectricDTO extends VehicleDTO{
+public class DieselElectricDTO extends VehicleDTO
+{
 
     private float batteryAmount;
     private float maxBattery;
@@ -60,12 +61,8 @@ public class DieselElectricDTO extends VehicleDTO{
         return super.toString() + "test";
     }
     
-//    
-//        private float batteryAmount;
-//    private float maxBattery;
-//    private float fuelAmount;
-//    private float maxFuel;
-    public String serialized()
+    @Override
+    public String serialize()
     {
         return "DieselElectric|" 
                 + batteryAmount + "|" 

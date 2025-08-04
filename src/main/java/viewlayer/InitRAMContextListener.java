@@ -51,10 +51,14 @@ public class InitRAMContextListener implements ServletContextListener
         VehicleDAO dao = new VehicleDAO();
         try {
             ArrayList<VehicleDTO> activeVehicles = dao.getAll();
+            
             sce.getServletContext().setAttribute("activeVehicles", activeVehicles);
         } catch (SQLException e)
         {
             // TODO: Handle this better? Use exceptions that crash the program gracefully?
+            e.printStackTrace();
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }

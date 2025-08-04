@@ -19,7 +19,7 @@ public interface  VehicleDAOInterface
      * @return List of all DTO's
      * @throws SQLException 
      */
-    public ArrayList<VehicleDTO> getAll() throws SQLException;
+    public ArrayList<VehicleDTO> getAll() throws SQLException, Exception;
     
     
     /**
@@ -33,21 +33,21 @@ public interface  VehicleDAOInterface
      * @param dto used to create the database object
      * @throws SQLException 
      */
-    public void create(VehicleDTO dto) throws SQLException;
+    public void create(VehicleDTO dto, String typeInfo) throws SQLException;
     
     /**
      * @param vehicleNumber
      * @return VehicleDTO with number matching input
      * @throws SQLException 
      */
-    public VehicleDTO get(String vehicleNumber) throws SQLException;
+    public VehicleDTO get(String vehicleNumber) throws SQLException, Exception;
     
     /**
      * @param vehicleNumber
      * @return true if vehicle was updated
      * @throws SQLException 
      */
-    public boolean update(VehicleDTO dto) throws SQLException;
+    public boolean update(VehicleDTO dto, String typeInfo) throws SQLException, Exception;
     
     /**
      * @param vehicleNumber

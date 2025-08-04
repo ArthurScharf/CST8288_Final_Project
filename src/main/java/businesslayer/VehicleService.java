@@ -41,7 +41,7 @@ public class VehicleService
         float deltaSeconds = (float)deltaTime.getSeconds();
         VehicleDAO dao = new VehicleDAO();
 
-        try {
+//        try {
             // Hardcoded vehicle speed for testing
             // TODO: Implement vehicle speed specific distance changes
             for (VehicleDTO v : vcls)
@@ -54,12 +54,13 @@ public class VehicleService
                 /*
                     Calling this query many times seems terrible inefficient. For now, though, it works
                 */
-                dao.update(v);
+                // dao.update(v, );
             }
-        } catch (SQLException e)
-        {
-            throw new Exception("SQLException in VehicleServices::increaseDistanceTraveled __ while updating vehicle\n" + e.getMessage(), e);
-        }
+//        } 
+//        catch (SQLException e)
+//        {
+//            throw new Exception("SQLException in VehicleServices::increaseDistanceTraveled __ while updating vehicle\n" + e.getMessage(), e);
+//        }
     }//~ increaseDistanceTraveled(...)
     
     
@@ -69,7 +70,7 @@ public class VehicleService
         throws Exception
     {
         // "type|resourceType|resourceAmount|maxResource"
-        String[] typeParams = typeInfo.split("|");
+        String[] typeParams = typeInfo.split("\\|");
         
         // TODO: What happens when no delimiter exists?
         if (typeParams.length == 0 || typeParams[0] == null)

@@ -66,9 +66,14 @@ public class VehicleController extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
     {
         processRequest(request, response);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicle.jsp");
-        dispatcher.forward(request, response);
+        
+        if (!response.isCommitted())
+        {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicle.jsp");
+            dispatcher.forward(request, response);
+        }
     }
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -113,31 +118,38 @@ public class VehicleController extends HttpServlet
             }
         }
         
-        // -- Creating new vehicle -- //
-        String vehicleNumber = request.getParameter("vehicleNumber");
-        // int    maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
+         // TODO: Fix this to properly add vehicles
         
-        VehicleDTO vcl = new VehicleDTO();
-        vcl.setVehicleNumber(vehicleNumber);
+        // -- Creating new vehicle -- //
+//        String vehicleNumber = request.getParameter("vehicleNumber");
+//        // int    maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
+//        VehicleDTO vcl = VehicleService.createVehicle(
+//                vehicleNumber, 
+//                0, 
+//                0, 
+//                0, 
+//                pathInfo
+//        );
+//        vcl.setVehicleNumber(vehicleNumber);
         // vcl.setMaximumPassengers(maxPassengers);
         
     
         // -- Creating Record in Database -- //
-        VehicleDAO dao = new VehicleDAO();
-        
-        try {
-            dao.create(vcl);
-        } catch (SQLException e)
-        {
-            request.getServletContext().setAttribute("errorMessage", "Exception VehicleController::doGet -- " + e.getMessage());
-            request.getServletContext().getNamedDispatcher("error").forward(request, response);
-            return;
-        }
-        
-        // -- Creating undo command -- //
-        // TODO: Prevent this controller serving if user isn't logged in
-        UndoCreateVehicle undo = new UndoCreateVehicle(vcl);
-        request.getSession(false).setAttribute("UndoCreateVehicle", undo);
+//        VehicleDAO dao = new VehicleDAO();
+//        
+//        try {
+//            dao.create(vcl, "Bus|CNG|200|300");
+//        } catch (SQLException e)
+//        {
+//            request.getServletContext().setAttribute("errorMessage", "Exception VehicleController::doGet -- " + e.getMessage());
+//            request.getServletContext().getNamedDispatcher("error").forward(request, response);
+//            return;
+//        }
+//        
+//        // -- Creating undo command -- //
+//        // TODO: Prevent this controller serving if user isn't logged in
+//        UndoCreateVehicle undo = new UndoCreateVehicle(vcl);
+//        request.getSession(false).setAttribute("UndoCreateVehicle", undo);
         
         request.getServletContext().getNamedDispatcher("home").forward(request, response);
         return;

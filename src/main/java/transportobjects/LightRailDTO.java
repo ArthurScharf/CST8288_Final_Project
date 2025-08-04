@@ -5,6 +5,7 @@
 package transportobjects;
 
 /**
+ * String storage convention: "type|batteryAmount|maxBattery"
  * @author Mike sharpe
  */
 public class LightRailDTO extends VehicleDTO
@@ -41,7 +42,8 @@ public class LightRailDTO extends VehicleDTO
         return super.toString() + "test";
     }
     
-    public String serialized()
+    @Override
+    public String serialize()
     {
         return "LigthRail|" 
                 + batteryAmount + "|" 
