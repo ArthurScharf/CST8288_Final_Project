@@ -54,16 +54,20 @@ public class ReportBuilder {
         //Choosing between USDToCAD or CADToUSD shoudl be implemented somehow later on
         switch (mode) {
             case 1:
-                currencyContext = new CurrecnyStrategyContext(new CADToUSD());
-                this.cost = currencyContext.currencyConvertor(cost);
+                currencyStrategy = new CADToUSD();
                 break;
             case 2:
-                currencyContext = new CurrecnyStrategyContext(new USDToCAD());
-                this.cost = currencyContext.currencyConvertor(cost);
+                currencyStrategy = new USDToCAD();
                 break;
             default:
-                this.cost = cost;
+                currencyStrategy = null;
                 break;
+        }
+
+        if (currencyStrategy != null) {
+            this.cost = currencyStrategy.convert(cost);
+        } else {
+            this.cost = cost;
         }
         return this;
         }
