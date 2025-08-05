@@ -94,3 +94,13 @@ DELETE FROM Notification;
 
 
 
+CREATE TABLE MaintenanceTask (
+    TaskID INT auto_increment PRIMARY KEY,
+    Description VARCHAR(255) NOT NULL,
+    Status ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED') NOT NULL
+);
+
+
+
+
+

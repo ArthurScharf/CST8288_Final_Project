@@ -25,6 +25,7 @@ String role = (obj == null) ? null : (String)obj;
         <%if ("Manager".equals(role)) { %> <%-- Are we logged in? --%>
             <a href="VehicleController">Vehicles</a>
             <a href="reporttest.jsp">Reports</a>
+            <a href="maintenance">Maintenance</a>
         <%} else if ("Operator".equals(role)) { %>
             <a>Operator Actions</a>
         <%} else {%>

@@ -36,6 +36,10 @@
         <jsp-file>/home.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>maintenance</servlet-name>
+        <jsp-file>/WEB-INF/views/maintenance.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>viewlayer.LoginController</servlet-class>
     </servlet>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>maintenance</servlet-name>
+        <url-pattern>/maintenance</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
