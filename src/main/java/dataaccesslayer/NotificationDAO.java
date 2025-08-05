@@ -18,6 +18,39 @@ import transportobjects.NotificationDTO;
 public class NotificationDAO implements NotificationDAOInterface
 {
     /**
+    * @return all notifications in the database, or null if none exist.
+    * @throws Exception if a SQL error occurs during the operation.
+    */
+    public ArrayList<NotificationDTO> getAll() throws Exception {
+        String query = "SELECT * FROM Notification"; 
+
+        Connection conn = DataSource.INSTANCE.getConnection();
+
+        ArrayList<NotificationDTO> dtos = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet results = stmt.executeQuery()) 
+        {
+            System.out.println("\nNumber: " + dtos.size());
+            
+            while (results.next()) {
+                NotificationDTO dto = new NotificationDTO();
+                dto.setId(results.getInt("ID"));
+                dto.setType(
+                    NotificationType.fromString(
+                        results.getString("Type")
+                    )
+                );
+                dto.setData(results.getString("Data"));
+                dtos.add(dto);
+            }
+        } catch (SQLException e) {
+            throw new Exception("NotificationDAO::getAll -- SQL operation failed: " + e.getMessage(), e);
+        }
+        return dtos.isEmpty() ? null : dtos;
+    }
+    
+    
+    /**
      * @param type The type to return
      * @return all notifications of the passed type or null of none exist
      * @throws Exception 
@@ -84,5 +117,7 @@ public class NotificationDAO implements NotificationDAOInterface
             throw new Exception("NotificationDAO::create -- SQL operation failed: " + e.getMessage(), e);
         }
     }//~ create(...)
+    
+    
 }
 

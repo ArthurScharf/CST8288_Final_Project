@@ -27,7 +27,7 @@
             // -- Test by returning all notifications of a type -- //
             NotificationDAO dao = new NotificationDAO();
             try {
-                ArrayList<NotificationDTO> dtos = dao.getByType(NotificationType.MAINTENANCE);
+                ArrayList<NotificationDTO> dtos = dao.getAll();
                 for (NotificationDTO n : dtos)
                 {
                     out.println("<tr>");
@@ -42,7 +42,7 @@
                 }
             } catch (Exception e)
             {
-                out.println("<p>"+e.getMessage()+"</p>"); // Should be a redirect, but this is faster
+                out.println("<p>Notifications.jsp -- " + e.getMessage()+"</p>"); // Should be a redirect, but this is faster
             }
         %>
         </table>

@@ -46,7 +46,8 @@ public class VehicleDAO implements VehicleDAOInterface
             }
         } catch (SQLException e)
         {
-            throw new SQLException("SQL Exception while retreiving all vehicles" + e.getMessage(), e);
+            // throw new SQLException("SQL Exception while retreiving all vehicles" + e.getMessage(), e);
+            throw e;
         } catch (Exception e)
         {
             throw e;

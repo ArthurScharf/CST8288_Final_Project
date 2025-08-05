@@ -22,7 +22,7 @@ public enum NotificationType
     public static NotificationType fromString(String typeStr)
     {
         String str = typeStr.toLowerCase();
-        switch (str)
+        switch (str.toLowerCase())
         {
             case("maintenance") -> { return NotificationType.MAINTENANCE; }
             case("fuel") -> { return NotificationType.FUEL; }

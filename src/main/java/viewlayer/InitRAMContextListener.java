@@ -12,7 +12,8 @@ import javax.servlet.ServletContextListener;
 import transportobjects.VehicleDTO;
 import java.time.Instant;
 import javax.servlet.ServletContext;
-import observer.Observer;
+import observer.FuelObserver;
+import observer.MaintenanceObserver;
 
 
 /**
@@ -43,15 +44,22 @@ public class InitRAMContextListener implements ServletContextListener
         context.setAttribute("lastInstant", Instant.now());
         
         // -- Event Notification Observers -- //
-        context.setAttribute("maintenanceEvent", new Observer());
-        context.setAttribute("fuelEvent", new Observer());
-        context.setAttribute("breakEvent", new Observer());
+//        context.setAttribute("maintenanceEvent", new Observer());
+//        context.setAttribute("fuelEvent", new Observer());
+//        context.setAttribute("breakEvent", new Observer());
         
         // -- Vehicles on the road -- //
         VehicleDAO dao = new VehicleDAO();
         try {
+            // -- Initializing Vehicles on the road with proper observers -- //
             ArrayList<VehicleDTO> activeVehicles = dao.getAll();
-            
+            System.out.println(activeVehicles.size());
+            for (VehicleDTO vcl : activeVehicles)
+            {
+                // Visitor pattern in action
+                vcl.registerFuelObserver(new FuelObserver(vcl)); 
+                vcl.registerMaintainenceObserver(new MaintenanceObserver(vcl));
+            }
             sce.getServletContext().setAttribute("activeVehicles", activeVehicles);
         } catch (SQLException e)
         {

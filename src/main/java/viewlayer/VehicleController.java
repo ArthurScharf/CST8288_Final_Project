@@ -43,9 +43,6 @@ public class VehicleController extends HttpServlet
                     (ArrayList<VehicleDTO>) context.getAttribute("activeVehicles"),  
                     (Instant) context.getAttribute("lastInstant")
             );
-            // -- TEST: Creating test notification -- //
-            // Observer fuelObserver = (Observer)context.getAttribute("fuelEvent");
-            // fuelObserver.update(NotificationType.MAINTENANCE, "V002|Axel Broken"); // Creates a notificaton in the database
         } catch (Exception e)
         {
             context.setAttribute("errorMessage", e.getMessage());
