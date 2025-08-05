@@ -4,8 +4,14 @@
  */
 package businesslayer.report;
 
+import dataaccesslayer.VehicleDAO;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import transportobjects.BusDTO;
+import transportobjects.DieselElectricDTO;
+import transportobjects.LightRailDTO;
+import transportobjects.VehicleDTO;
 
 /**
  *
@@ -14,12 +20,25 @@ import java.util.List;
 public class ReportBuilder {
     
     //Fileds are subjected to be chanegd based in the project proccess
+    //DUMMY OBJECTS
     private String locationTracking;
     private int energyConsumption;
     private List<String> transitMaintenance;
     private HashMap<String, String> operatorPerformance;
     private double cost;
     private ICurrencyStrategy currencyStrategy;
+    
+    
+    
+    //PROJECT OBJECTS
+    private ArrayList<VehicleDTO> vehicleDTOList;
+    private VehicleDAO vehicleDAO;
+    
+    private ArrayList<BusDTO> busDTOList;
+    private ArrayList<DieselElectricDTO> deiselElectricDTOList;
+    private ArrayList<LightRailDTO> lightRailDTO;
+
+
     
     //Currency Strategy
     private CurrecnyStrategyContext currencyContext;
@@ -71,12 +90,44 @@ public class ReportBuilder {
         }
         return this;
         }
+    
+    
+    
+    //PROJECT OBJECTS
+    public ReportBuilder addVehicleDTOList(ArrayList<VehicleDTO> vehicleDTOList){
+        this.vehicleDTOList = vehicleDTOList;
+        return this;
+    }
+    
+    public ReportBuilder addBusDTOList(ArrayList<BusDTO> busDTOList){
+        this.busDTOList = busDTOList;
+        return this;
+    }
+    
+    public ReportBuilder addDeiselElectricDTOList (ArrayList<DieselElectricDTO> deiselElectricDTOList){
+        this.deiselElectricDTOList = deiselElectricDTOList;
+        return this;
+    }
+    
+    public ReportBuilder addLightRailDTO (ArrayList<LightRailDTO> lightRailDTO){
+        this.lightRailDTO = lightRailDTO;
+        return this;
+    }
+    
+    public ReportBuilder withVehicleDAO(VehicleDAO dao) {
+    this.vehicleDAO = dao;
+    return this;
+    }
+
+    
+    
 
     //This method builds a Report object based on the added parameters
     public Report build(){
         return new Report(locationTracking, energyConsumption,
             transitMaintenance, operatorPerformance,
-            cost, currencyStrategy);
+            cost, currencyStrategy, vehicleDTOList, busDTOList, 
+                deiselElectricDTOList, lightRailDTO);
     }
     
 }

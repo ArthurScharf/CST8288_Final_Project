@@ -4,6 +4,10 @@
     Author     : sina8
 --%>
 
+<%@page import="java.sql.SQLException"%>
+<%@page import="dataaccesslayer.VehicleDAO"%>
+<%@page import="transportobjects.VehicleDTO"%>
+<%@page import="transportobjects.LightRailDTO"%>
 <%@page import="java.lang.Exception"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.List"%>
@@ -27,6 +31,9 @@
     <body>
         <h1>Report View!</h1>
         
+
+        
+        
             <%
                 ReportBuilder builder = Report.builder();
                 Report repo = null;
@@ -35,6 +42,13 @@
                 boolean isTarnsitMaintenance = false;
                 boolean isOperatorPerformance = false;
                 boolean isCostSelected = false;
+                
+                //PROJECT OBJECT
+                boolean isVehicleSelected = false;
+                boolean isBusselected = false;
+                boolean isDieselElectric = false;
+                boolean isLightRail = false;
+                
                 
                 for (String section: selectedSections){
                     if ("locationTracking".equals(section)) {
@@ -47,7 +61,16 @@
                         isOperatorPerformance = true;
                     } else if ("cost".equals(section)) {
                         isCostSelected = true;
-                    }
+                    } else if ("vehicleDTO".equals(section)){
+                    isVehicleSelected = true; 
+                    } else if ("bus".equals(section)){
+                        isBusselected = true;
+                    } else if ("dieselElectric".equals(section)){
+                        isDieselElectric = true;
+                    } else if ("lightRail".equals(section)){
+                        isLightRail = true;
+                }
+                
                     
                 }
                 
@@ -68,6 +91,8 @@
                     operator.put("Driver 1", "Excellent");
                     operator.put("Driver 2", "Satisfactory");
                     builder.addOperatorPerformance(operator);
+                    
+                   
                 }
                 if (isCostSelected){
                     int mode = 0;
@@ -78,6 +103,20 @@
                     break;              
                     }
                     builder.addCost(10, mode);
+                }
+                
+                if (isVehicleSelected) {
+                    VehicleDAO dao = new VehicleDAO();
+                    ArrayList<VehicleDTO> vehicleDTOList = dao.getAll();
+
+                    builder.addVehicleDTOList(vehicleDTOList);  
+                }
+                
+                
+                if (isBusselected){
+                    VehicleDAO dao = new VehicleDAO();
+                    ArrayList<VehicleDTO> vehicleDTOList = dao.getAll();
+                    
                 }
                 
                 repo = builder.build();
@@ -106,11 +145,8 @@
 //                    out.println("<p> cost: "+ repo.getCost() + "</p>");
 //                    out.println("<p> energy "+ repo.getEnergyConsumption() + "</p>");
 //                }
-                
-            
-            
-            
             
             %>
+
     </body>
 </html>

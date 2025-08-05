@@ -33,6 +33,18 @@
 
         <input type="checkbox" id="currencyStrategy" name="sections" value="currencyStrategy">
         <label for="currencyStrategy">Currency Strategy</label><br>
+        
+        <input type="checkbox" id="lightRail" name="sections" value="lightRail">
+        <label for="lightRail">Light Rail Analysis</label><br>
+        
+        <input type="checkbox" id="dieselElectric" name="sections" value="dieselElectric">
+        <label for="dieselElectric">Diesel ELectric Train Report</label><br>
+        
+        <input type="checkbox" id="vehicleDTO" name="sections" value="vehicleDTO">
+        <label for="vehicleDTO">Vehicle Report</label><br>
+        
+        <input type="checkbox" id="bus" name="sections" value="bus">
+        <label for="vehicleDTO">Bus Report</label><br>
 
         <br><br>
 
