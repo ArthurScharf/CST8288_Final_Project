@@ -20,5 +20,10 @@ public class USDToCAD implements ICurrencyStrategy {
     public double convert(double amount) {
         return amount * dailyRate;
     }
+
+    @Override
+    public String getLabel() {
+        return "CAD";
+    }
     
 }

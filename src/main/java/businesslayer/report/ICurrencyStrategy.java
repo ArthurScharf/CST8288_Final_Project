@@ -12,4 +12,6 @@ public interface ICurrencyStrategy {
     
     double convert(double amount);
     
+    String getLabel();
+    
 }
