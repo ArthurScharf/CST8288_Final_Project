@@ -4,7 +4,7 @@
  */
 package transportobjects;
 
-import dataaccesslayer.NotificationType;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
