@@ -52,8 +52,4 @@ public class NotificationDTO
     public void setData(String data) {
         this.data = data;
     }
-    
-
-    
-    
 }

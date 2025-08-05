@@ -17,9 +17,7 @@ import transportobjects.VehicleDTO;
 /**
  * Business logic relating to vehicles.
  * 
- * NOTE: The code for dummy changes in the vehicles position over time is stored here
- * 
- * @author Arthur Scharf
+ * @author Arthur Scharf, Mike Sharpe
  */
 public class VehicleService 
 {
@@ -41,26 +39,19 @@ public class VehicleService
         float deltaSeconds = (float)deltaTime.getSeconds();
         VehicleDAO dao = new VehicleDAO();
 
-//        try {
-            // Hardcoded vehicle speed for testing
-            // TODO: Implement vehicle speed specific distance changes
+        try {
             for (VehicleDTO v : vcls)
             {
-                /*
-                    Check for overridden limitations
-                */
-                v.setTotalDistanceTraveled((float) (v.getTotalDistanceTraveled() + (deltaSeconds * 13.0))); // Buses are 50km/h speeds
+                v.updateDistanceTraveled(deltaSeconds);
+                
                 // -- Updating Vehicles in Database -- //
-                /*
-                    Calling this query many times seems terrible inefficient. For now, though, it works
-                */
-                // dao.update(v, );
+                // Calling this query many times seems terribly inefficient. For now, though, it works
+                dao.update(v, v.serialize());
             }
-//        } 
-//        catch (SQLException e)
-//        {
-//            throw new Exception("SQLException in VehicleServices::increaseDistanceTraveled __ while updating vehicle\n" + e.getMessage(), e);
-//        }
+        } catch (SQLException e)
+        {
+            throw new Exception("SQLException in VehicleServices::increaseDistanceTraveled __ while updating vehicle\n" + e.getMessage(), e);
+        }
     }//~ increaseDistanceTraveled(...)
     
     
@@ -69,7 +60,6 @@ public class VehicleService
     public static VehicleDTO createVehicle(String vehicleNumber, int maxPassengers, int routeID, float totalDistanceTraveled, String typeInfo)
         throws Exception
     {
-        // "type|resourceType|resourceAmount|maxResource"
         String[] typeParams = typeInfo.split("\\|");
         
         // TODO: What happens when no delimiter exists?
@@ -77,7 +67,6 @@ public class VehicleService
         {
             throw new Exception("VehicleService::createVehicle--Invalid type info passed");
         }
-        
         switch(typeParams[0])
         {
             case("Bus") -> {
@@ -95,10 +84,8 @@ public class VehicleService
                 }
                 return dto;
             }
-            
-//          private float batteryAmount;
-//          private float maxBattery;
             case("LightRail") -> {
+                System.out.print("\nAttempt Create LightRail\n");
                 LightRailDTO dto = new LightRailDTO();
                 initVehicle(dto, vehicleNumber, maxPassengers, routeID, totalDistanceTraveled);
                 try
@@ -112,7 +99,6 @@ public class VehicleService
                 }
                 return dto;
             }
-            
             case("DieselElectric") -> {
                 DieselElectricDTO dto = new DieselElectricDTO();
                 initVehicle(dto, vehicleNumber, maxPassengers, routeID, totalDistanceTraveled);
@@ -130,9 +116,19 @@ public class VehicleService
                 return dto;
             }
         }
+        System.out.println("\n failed to create: " + typeParams[0] + "\n");
         return null;
     }//~ createCreateVehicle(...)
     
+    /**
+     * Private helper function used by createVehicle
+     * 
+     * @param dto
+     * @param vehicleNumber
+     * @param maxPassengers
+     * @param routeID
+     * @param totalDistanceTraveled 
+     */
     private static void initVehicle(VehicleDTO dto, String vehicleNumber, int maxPassengers, int routeID, float totalDistanceTraveled)
     {
         dto.setVehicleNumber(vehicleNumber);

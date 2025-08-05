@@ -4,18 +4,26 @@
  */
 package transportobjects;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * String storage convention: "type|batteryAmount|maxBattery"
  * @author Mike sharpe
  */
 public class LightRailDTO extends VehicleDTO
 {
+    private static final float lightRailSpeed = 30.f;
+    private static final float batteryConsumptionRate = 0.000005f;
+
     private float batteryAmount;
     private float maxBattery;
 
     public LightRailDTO()
     {
         super();
+        super.vehicleSpeed = lightRailSpeed;
+        super.setMaintainanceDistance(9000);
         batteryAmount = -1;
         maxBattery = -1;
     }
@@ -45,8 +53,22 @@ public class LightRailDTO extends VehicleDTO
     @Override
     public String serialize()
     {
-        return "LigthRail|" 
+        return "LightRail|" 
                 + batteryAmount + "|" 
                 + maxBattery;
+    }
+    
+    @Override
+    public void updateResourceConsumption(float deltaSeconds)
+    {
+        batteryAmount = Math.clamp(batteryAmount - (batteryConsumptionRate * deltaSeconds), 0.f, maxBattery);
+        if ((batteryAmount / maxBattery) <= 0.25)
+        {
+            try {
+                fuelObserver.update();
+            } catch (Exception ex) {
+                Logger.getLogger(LightRailDTO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
