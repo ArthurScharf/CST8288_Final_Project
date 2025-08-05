@@ -4,8 +4,6 @@
  */
 package transportobjects;
 
-import dataaccesslayer.NotificationType;
-
 /**
  * DTO for events that trigger Observers. Stored in the database and processed
  * later upon client access. 

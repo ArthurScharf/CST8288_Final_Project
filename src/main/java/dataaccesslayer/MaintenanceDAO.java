@@ -81,4 +81,33 @@ public class MaintenanceDAO {
             throw new Exception("MaintenanceDAO::create -- SQL operation failed: " + e.getMessage(), e);
         }
     }
+    
+    
+    /**
+     * Deletes a maintenance task from the database by its ID.
+     *
+     * @param id The ID of the maintenance task to delete.
+     * @return true if the task was successfully deleted (one row affected), false otherwise.
+     * @throws Exception if a SQL error occurs during the operation.
+     */
+    public boolean delete(int id) throws Exception {
+        String query = "DELETE FROM MaintenanceTask WHERE TaskID = ?";
+       
+        Connection conn = DataSource.INSTANCE.getConnection();
+        boolean deleted = false;
+ 
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                deleted = true;
+            } else {
+                System.out.println("MaintenanceDAO::delete -- No maintenance task found with ID: " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("MaintenanceDAO::delete -- SQL operation failed: " + e.getMessage(), e);
+        }
+        return deleted;
+    }//~ delete(...)
 }
