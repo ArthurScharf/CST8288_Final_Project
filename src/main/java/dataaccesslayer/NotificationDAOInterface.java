@@ -4,6 +4,7 @@
  */
 package dataaccesslayer;
 
+import transportobjects.NotificationType;
 import java.util.ArrayList;
 import transportobjects.NotificationDTO;
 

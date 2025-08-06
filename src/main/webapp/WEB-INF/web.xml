@@ -63,6 +63,10 @@
         <servlet-name>notification</servlet-name>
         <jsp-file>/WEB-INF/views/notification.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>NotificationResponseController</servlet-name>
+        <servlet-class>viewlayer.NotificationResponseController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
@@ -91,8 +95,8 @@
     <servlet-mapping>
         <servlet-name>reporttest</servlet-name>
         <url-pattern>/reporttest.jsp</url-pattern>
-    </servlet-mapping>  
-<!--    <servlet-mapping>
+    </servlet-mapping>
+    <!--    <servlet-mapping>
         <servlet-name>notification</servlet-name>
         <url-pattern>/notification</url-pattern>
     </servlet-mapping>-->
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/RegisterController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationResponseController</servlet-name>
+        <url-pattern>/NotificationResponseController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,7 +5,7 @@
 package observer;
 
 import dataaccesslayer.NotificationDAO;
-import dataaccesslayer.NotificationType;
+import transportobjects.NotificationType;
 import transportobjects.NotificationDTO;
 import transportobjects.VehicleDTO;
 

@@ -4,6 +4,7 @@
  */
 package dataaccesslayer;
 
+import transportobjects.NotificationType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,6 +98,42 @@ public class NotificationDAO implements NotificationDAOInterface
     }//~ getByType(...)
     
     
+    /**
+     * Retrieves a single notification by its ID.
+     *
+     * @param id The ID of the notification to retrieve.
+     * @return The NotificationDTO object if found, or null if not found.
+     * @throws Exception if a SQL error occurs during the operation or if the type string is invalid.
+     */
+    public NotificationDTO getById(int id) throws Exception {
+        String query = "SELECT ID, Type, Data FROM Notification WHERE ID = ?";
+        Connection conn =  DataSource.INSTANCE.getConnection();
+
+        NotificationDTO dto = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet results = stmt.executeQuery()) {
+                if (results.next()) {
+                    dto = new NotificationDTO();
+                    dto.setId(results.getInt("ID"));
+                    dto.setType(NotificationType.fromString(results.getString("Type")));
+                    dto.setData(results.getString("Data"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new Exception("NotificationDAO::getById ... SQL query failed: " + e.getMessage(), e);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                throw new Exception("NotificationDAO::getById -- Invalid type found in database for ID " + id + ": " + e.getMessage(), e);
+            }
+        } catch (SQLException e) {
+            throw new Exception("NotificationDAO::getById -- SQL operation failed: " + e.getMessage(), e);
+        }
+        return dto;
+    }
+    
+    
     
     public void create(NotificationDTO dto) throws Exception
     {
@@ -118,6 +155,33 @@ public class NotificationDAO implements NotificationDAOInterface
         }
     }//~ create(...)
     
+    
+        /**
+     * Deletes a notification from the database by its ID.
+     *
+     * @param id The ID of the notification to delete.
+     * @return true if the notification was successfully deleted (one row affected), false otherwise.
+     * @throws Exception if a SQL error occurs during the operation.
+     */
+    public boolean delete(int id) throws Exception {
+        String query = "DELETE FROM Notification WHERE ID = ?";
+        Connection conn = DataSource.INSTANCE.getConnection();
+        boolean deleted = false;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                deleted = true;
+            } else {
+                System.out.println("NotificationDAO::delete -- No notification found with ID: " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("NotificationDAO::delete -- SQL operation failed: " + e.getMessage(), e);
+        }
+        return deleted;
+    }
     
 }
 
