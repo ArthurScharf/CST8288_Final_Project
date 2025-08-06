@@ -1,9 +1,3 @@
-<%-- 
-    Document   : reportView
-    Created on : Jul 27, 2025, 1:50:59 p.m.
-    Author     : sina8
---%>
-
 <%@page import="businesslayer.report.USDToCAD"%>
 <%@page import="transportobjects.DieselElectricDTO"%>
 <%@page import="java.sql.SQLException"%>
@@ -19,110 +13,84 @@
 <%@page import="businesslayer.report.Report"%>
 <%@page import="businesslayer.report.ICurrencyStrategy"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%
     String[] selectedSections = request.getParameterValues("sections");
-    //String sections = request.getParameter("sections");
     String costMode = request.getParameter("costCurrency");
 %>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Report View!</h1>
-        
+<head>
+    <meta charset="UTF-8">
+    <title>Transit Report View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <div class="max-w-5xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-6 text-center">Transit Report</h1>
 
-        
-        
+        <div class="space-y-4">
             <%
                 ReportBuilder builder = Report.builder();
                 Report repo = null;
-                
-                
-                //PROJECT OBJECT
-                boolean isBusselected = false;
+
+                boolean isBusSelected = false;
                 boolean isDieselElectric = false;
                 boolean isLightRail = false;
-                
-                
-                for (String section: selectedSections){
-                    if ("bus".equals(section)){
-                        isBusselected = true;
-                    } else if ("dieselElectric".equals(section)){
-                        isDieselElectric = true;
-                    } else if ("lightRail".equals(section)){
-                        isLightRail = true;
-                }
-                }
- 
-                
-                
-                if (isDieselElectric){
-                    VehicleDAO dao = new VehicleDAO();
-                    ArrayList<VehicleDTO> dieselElectricDTODTOList = dao.getAll();
-                    builder.addDeiselElectricDTOList(dieselElectricDTODTOList);
-                    ICurrencyStrategy mode = null;
-                    switch(costMode){
-                    case "USDToCAD": mode =new USDToCAD() ;
-                    break;
-                    case "CADToUSD": mode = new CADToUSD();
-                    break;              
-                    default: mode = new USDToCAD();
+
+                if (selectedSections != null) {
+                    for (String section : selectedSections) {
+                        if ("bus".equals(section)) {
+                            isBusSelected = true;
+                        } else if ("dieselElectric".equals(section)) {
+                            isDieselElectric = true;
+                        } else if ("lightRail".equals(section)) {
+                            isLightRail = true;
+                        }
                     }
-                    builder.addMode(mode);
-                
-                
                 }
-                
-                if (isLightRail){   
-                    VehicleDAO dao = new VehicleDAO();
-                    ArrayList<VehicleDTO> lightRailDTODTOList = dao.getAll();
-                    ICurrencyStrategy mode = null;
-                    switch(costMode){
-                    case "USDToCAD": mode =new USDToCAD() ;
-                    break;
-                    case "CADToUSD": mode = new CADToUSD();
-                    break;              
-                    default: mode = new USDToCAD();
-                    }
-                    builder.addMode(mode);
-                    builder.addLightRailDTO(lightRailDTODTOList);
-                    
-                
+
+                VehicleDAO dao;
+                ICurrencyStrategy mode;
+
+                switch (costMode) {
+                    case "CADToUSD":
+                        mode = new CADToUSD();
+                        break;
+                    case "USDToCAD":
+                    default:
+                        mode = new USDToCAD();
+                        break;
                 }
-                
-                
-                if (isBusselected){
-                    VehicleDAO dao = new VehicleDAO();
-                    ArrayList<VehicleDTO> vehicleDTOList = dao.getAll();
-                    ICurrencyStrategy mode = null;
-                    switch(costMode){
-                    case "USDToCAD": mode =new USDToCAD() ;
-                    break;
-                    case "CADToUSD": mode = new CADToUSD();
-                    break;              
-                    default: mode = new USDToCAD();
-                    }
-                    builder.addMode(mode);
-                    builder.addBusDTOList(vehicleDTOList);
+
+                builder.addMode(mode);
+
+                if (isDieselElectric) {
+                    dao = new VehicleDAO();
+                    ArrayList<VehicleDTO> dieselElectricDTOList = dao.getAll();
+                    builder.addDeiselElectricDTOList(dieselElectricDTOList);
                 }
-                
-                
-                
+
+                if (isLightRail) {
+                    dao = new VehicleDAO();
+                    ArrayList<VehicleDTO> lightRailDTOList = dao.getAll();
+                    builder.addLightRailDTO(lightRailDTOList);
+                }
+
+                if (isBusSelected) {
+                    dao = new VehicleDAO();
+                    ArrayList<VehicleDTO> busDTOList = dao.getAll();
+                    builder.addBusDTOList(busDTOList);
+                }
+
                 repo = builder.build();
-                
                 List<String> htmlLines = repo.toHTML();
                 for (String line : htmlLines) {
-                    out.println(line);
+                    out.println("<div class='mb-4 p-4 bg-gray-100 rounded shadow'>" + line + "</div>");
                 }
-                
-                
-                
-
-            
             %>
-
-    </body>
+        </div>
+    </div>
+</body>
 </html>

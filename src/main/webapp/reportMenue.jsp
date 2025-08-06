@@ -1,67 +1,56 @@
-<%-- 
-    Document   : reportMenu
-    Created on : Jul 27, 2025, 1:50:49 p.m.
-    Author     : Sina Paslar
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h2>Transit Report Form</h2>
-    <form action="${pageContext.request.contextPath}/reportView.jsp" method="post">
-        <!-- Report Section Checkboxes -->
-        <p>Select Report Sections:</p>
-        <!-- 
-<input type="checkbox" id="locationTracking" name="sections" value="locationTracking">
-<label for="locationTracking">Location Tracking</label><br>
+<head>
+    <meta charset="UTF-8">
+    <title>Transit Report Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <div class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6 text-center">Transit Report Form</h2>
+        <form action="${pageContext.request.contextPath}/reportView.jsp" method="post" class="space-y-6">
 
-<input type="checkbox" id="energyConsumption" name="sections" value="energyConsumption">
-<label for="energyConsumption">Energy Consumption</label><br>
+            <!-- Report Sections -->
+            <div>
+                <p class="text-lg font-semibold mb-2">Select Report Sections:</p>
+                <div class="space-y-2 pl-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="lightRail" name="sections" value="lightRail" class="mr-2">
+                        Light Rail Analysis
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="dieselElectric" name="sections" value="dieselElectric" class="mr-2">
+                        Diesel Electric Train Report
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="bus" name="sections" value="bus" class="mr-2">
+                        Bus Report
+                    </label>
+                </div>
+            </div>
 
-<input type="checkbox" id="transitMaintenance" name="sections" value="transitMaintenance">
-<label for="transitMaintenance">Transit Maintenance</label><br>
+            <!-- Cost Currency -->
+            <div>
+                <p class="text-lg font-semibold mb-2">Cost Currency:</p>
+                <div class="space-y-2 pl-2">
+                    <label class="flex items-center">
+                        <input type="radio" id="cad" name="costCurrency" value="USDToCAD" checked class="mr-2">
+                        From USD to CAD
+                    </label>
+                    <label class="flex items-center">
+                        <input type="radio" id="usd" name="costCurrency" value="CADToUSD" class="mr-2">
+                        From CAD to USD
+                    </label>
+                </div>
+            </div>
 
-<input type="checkbox" id="operatorPerformance" name="sections" value="operatorPerformance">
-<label for="operatorPerformance">Operator Performance</label><br>
-
-<input type="checkbox" id="cost" name="sections" value="cost">
-<label for="cost">Cost</label><br>
-
-<input type="checkbox" id="currencyStrategy" name="sections" value="currencyStrategy">
-<label for="currencyStrategy">Currency Strategy</label><br>
-
-
-
-<input type="checkbox" id="vehicleDTO" name="sections" value="vehicleDTO">
-<label for="vehicleDTO">Vehicle Report</label><br>
-
-
--->
-        <input type="checkbox" id="lightRail" name="sections" value="lightRail">
-        <label for="lightRail">Light Rail Analysis</label><br>
-
-        <input type="checkbox" id="dieselElectric" name="sections" value="dieselElectric">
-        <label for="dieselElectric">Diesel ELectric Train Report</label><br>
-
-        <input type="checkbox" id="bus" name="sections" value="bus">
-        <label for="bus">Bus Report</label><br>
-
-        <br><br>
-
-        <!-- Radio Buttons for Cost Currency -->
-        <label>Cost Currency:</label><br>
-        <input type="radio" id="cad" name="costCurrency" value="USDToCAD" checked>
-        <label for="cad">From USD To CAD</label><br>
-        <input type="radio" id="usd" name="costCurrency" value="CADToUSD">
-        <label for="usd">From CAD TO USD</label><br>
-        
-        <!-- Submit Button -->
-        <input type="submit" value="Submit Report">
-    </form>
-    </body>
+            <!-- Submit Button -->
+            <div>
+                <input type="submit" value="Submit Report" 
+                       class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 shadow-md">
+            </div>
+        </form>
+    </div>
+</body>
 </html>
