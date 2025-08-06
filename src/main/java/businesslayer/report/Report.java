@@ -38,22 +38,29 @@ public class Report {
     private ArrayList<VehicleDTO> busDTOList;
     private ArrayList<VehicleDTO> deiselElectricDTOList;
     private ArrayList<VehicleDTO> lightRailDTO;
+    
+   
 
     
     
-    //STrategy Currency object\
-    ICurrencyStrategy currencyStratTOCAD = new USDToCAD();
-    CurrecnyStrategyContext cuurrencyContextToCAD = new CurrecnyStrategyContext(currencyStratTOCAD);
+    //STrategy Currency object
     
-    ICurrencyStrategy currencyStratTOUSD = new CADToUSD();
-    CurrecnyStrategyContext cuurrencyContextToUSD = new CurrecnyStrategyContext(currencyStratTOUSD);
+    
+    ICurrencyStrategy mode;
+    
+    
+    
+    
+    
+    
             
     public Report(String locationTracking, int energyConsumption,
             List<String> transitMaintenance, HashMap<String, String> operatorPerformance,
             double cost, ICurrencyStrategy currencyStrategy,
               ArrayList<VehicleDTO> busDTOList,
             ArrayList<VehicleDTO> deiselElectricDTOList,
-            ArrayList<VehicleDTO> lightRailDTO){
+            ArrayList<VehicleDTO> lightRailDTO,
+            ICurrencyStrategy mode){
         this.locationTracking = locationTracking;
         this.energyConsumption = energyConsumption;
         this.transitMaintenance = transitMaintenance;
@@ -66,6 +73,7 @@ public class Report {
         this.busDTOList = busDTOList;
         this.deiselElectricDTOList = deiselElectricDTOList;
         this.lightRailDTO = lightRailDTO;
+        this.mode = mode;
     }
 
     public String getLocationTracking() {
@@ -108,11 +116,17 @@ public class Report {
         return lightRailDTO;
     }
 
+    public ICurrencyStrategy getMode(){
+        return mode;
+    }
 
+    
     
     
     public List<String> toHTML()
     {
+        
+               
         List<String> htmlElements = new ArrayList<>();
 
         if (locationTracking != null) {
@@ -275,6 +289,11 @@ public class Report {
                    float remainBatt = ( lightRailDTO.getBatteryAmount() / lightRailDTO.getMaxBattery()) * 100;
                    float costToRecharge = ((lightRailDTO.getMaxBattery() - lightRailDTO.getBatteryAmount()) * BATTERY_PRICE) / 100;
                    
+                   
+                   
+                   CurrecnyStrategyContext cuurrencyContextToUSD = new CurrecnyStrategyContext(mode);
+                   
+                   
                    costToRecharge  = (float) cuurrencyContextToUSD.currencyConvertor(costToRecharge);
                    
                    htmlElements.add("<p><strong>Light Rail Number:</strong> " + lightRailDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
@@ -291,6 +310,8 @@ public class Report {
 
     }
     
+    
+  
     
     //bulds a new object of ReportBuilder based on the passed parameters form the constructor
     public static ReportBuilder builder (){

@@ -4,6 +4,7 @@
     Author     : sina8
 --%>
 
+<%@page import="businesslayer.report.USDToCAD"%>
 <%@page import="transportobjects.DieselElectricDTO"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="dataaccesslayer.VehicleDAO"%>
@@ -95,17 +96,17 @@
                     
                    
                 }
-                if (isCostSelected){
-                    int mode = 0;
-                    switch(costMode){
-                    case "USDToCAD": mode = 1;
-                    break;
-                    case "CADToUSD": mode = 2;
-                    break;              
-                    }
-                    builder.addCost(10, mode);
-                }
-                
+//                if (isCostSelected){
+//                    int mode = 0;
+//                    switch(costMode){
+//                    case "USDToCAD": mode = 1;
+//                    break;
+//                    case "CADToUSD": mode = 2;
+//                    break;              
+//                    }
+//                    builder.addCost(10, mode);
+//                }
+//                
                 
                 
                 if (isDieselElectric){
@@ -116,10 +117,13 @@
                 
                 }
                 
-                if (isLightRail){
+                if (isLightRail){   
                     VehicleDAO dao = new VehicleDAO();
                     ArrayList<VehicleDTO> lightRailDTODTOList = dao.getAll();
+                    ICurrencyStrategy mode = new USDToCAD();
+                    builder.addMode(mode);
                     builder.addLightRailDTO(lightRailDTODTOList);
+                    
                 
                 }
                 

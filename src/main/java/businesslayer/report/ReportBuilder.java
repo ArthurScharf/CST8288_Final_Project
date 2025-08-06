@@ -30,6 +30,7 @@ public class ReportBuilder {
     
     
     
+    
     //PROJECT OBJECTS
     private ArrayList<VehicleDTO> vehicleDTOList;
     private VehicleDAO vehicleDAO;
@@ -38,7 +39,11 @@ public class ReportBuilder {
     private ArrayList<VehicleDTO> deiselElectricDTOList;
     private ArrayList<VehicleDTO> lightRailDTO;
 
-
+    ICurrencyStrategy mode;
+    public ReportBuilder addMode(ICurrencyStrategy mode){
+        this.mode = mode;
+        return this;
+    }
     
     //Currency Strategy
     private CurrecnyStrategyContext currencyContext;
@@ -69,27 +74,27 @@ public class ReportBuilder {
         return this;
     }
 
-    public ReportBuilder addCost(double cost, int mode) {
-        //Choosing between USDToCAD or CADToUSD shoudl be implemented somehow later on
-        switch (mode) {
-            case 1:
-                currencyStrategy = new CADToUSD();
-                break;
-            case 2:
-                currencyStrategy = new USDToCAD();
-                break;
-            default:
-                currencyStrategy = null;
-                break;
-        }
-
-        if (currencyStrategy != null) {
-            this.cost = currencyStrategy.convert(cost);
-        } else {
-            this.cost = cost;
-        }
-        return this;
-        }
+//    public ReportBuilder addCost(double cost, int mode) {
+//        //Choosing between USDToCAD or CADToUSD shoudl be implemented somehow later on
+//        switch (mode) {
+//            case 1:
+//                currencyStrategy = new CADToUSD();
+//                break;
+//            case 2:
+//                currencyStrategy = new USDToCAD();
+//                break;
+//            default:
+//                currencyStrategy = null;
+//                break;
+//        }
+//
+//        if (currencyStrategy != null) {
+//            this.cost = currencyStrategy.convert(cost);
+//        } else {
+//            this.cost = cost;
+//        }
+//        return this;
+//        }
     
     
     
@@ -128,7 +133,7 @@ public class ReportBuilder {
         return new Report(locationTracking, energyConsumption,
             transitMaintenance, operatorPerformance,
             cost, currencyStrategy, busDTOList, 
-                deiselElectricDTOList, lightRailDTO);
+                deiselElectricDTOList, lightRailDTO, mode);
     }
     
 }
