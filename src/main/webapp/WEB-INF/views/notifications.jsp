@@ -10,6 +10,12 @@
 <%@page import="transportobjects.NotificationType"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.SQLException"%>
+
+<%
+Object obj = session.getAttribute("role");
+String role = (obj == null) ? null : (String)obj;
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -151,20 +157,39 @@
                     <%
                         } else {
                             for (NotificationDTO notification : notifications) {
+                                // Role check for notifications to send to the right role
+                                boolean shouldShow = false;
+                                if ("Manager".equals(role)) {
+                                    // Managers see ALL notifications EXCEPT the "end break" ones they send to operators
+                                    shouldShow = !notification.getData().contains("Manager requests you end your break");
+                                } else if ("Operator".equals(role)) {
+                                    // Operators only see notifications meant for them (containing "Manager requests")
+                                    shouldShow = notification.getData().contains("Manager requests you end your break");
+                                }
+                                
+                                if (shouldShow) {
                     %>
-                                <div class="notification-card">
-                                    <p><strong>ID:</strong> <%= notification.getId() %></p>
-                                    <p><strong>Type:</strong> <%= notification.getType().name() %></p>
-                                    <p><strong>Data:</strong> <%= notification.getData() %></p>
-                                    
-                                    <!-- <%= notification.getType().name() %> -->
-                                    <form action="NotificationResponseController" method="POST" class="mt-2">
-                                        <!-- You might want to include the ID as a hidden input if the controller needs it -->
-                                        <input type="hidden" name="notificationId" value="<%= notification.getId() %>">
-                                        <button type="submit" class="submit-button">Handle <%= notification.getType().name().toLowerCase() %></button>
-                                    </form>
-                                </div>
+                                    <div class="notification-card">
+                                        <p><strong>ID:</strong> <%= notification.getId() %></p>
+                                        <p><strong>Type:</strong> <%= notification.getType().name() %></p>
+                                        <p><strong>Data:</strong> <%= notification.getData() %></p>
+                                        
+                                        <!-- Route break notifications to BreakController, others to NotificationResponseController -->
+                                        <form action="<%= notification.getType() == NotificationType.BREAK ? "BreakController" : "NotificationResponseController" %>" method="POST" class="mt-2">
+                                            <input type="hidden" name="notificationId" value="<%= notification.getId() %>">
+                                            <% if ("Operator".equals(role) && notification.getData().contains("Manager requests you end your break")) { %>
+                                                <input type="hidden" name="action" value="endFromNotification">
+                                                <button type="submit" class="submit-button">End Break</button>
+                                            <% } else if (notification.getType() == NotificationType.BREAK) { %>
+                                                <input type="hidden" name="action" value="handleBreakNotification">
+                                                <button type="submit" class="submit-button">Handle break</button>
+                                            <% } else { %>
+                                                <button type="submit" class="submit-button">Handle <%= notification.getType().name().toLowerCase() %></button>
+                                            <% } %>
+                                        </form>
+                                    </div>
                     <%
+                                }
                             }
                         }
                     %>
