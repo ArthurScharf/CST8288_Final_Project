@@ -39,6 +39,14 @@ public class Report {
     private ArrayList<VehicleDTO> deiselElectricDTOList;
     private ArrayList<VehicleDTO> lightRailDTO;
 
+    
+    
+    //STrategy Currency object\
+    ICurrencyStrategy currencyStratTOCAD = new USDToCAD();
+    CurrecnyStrategyContext cuurrencyContextToCAD = new CurrecnyStrategyContext(currencyStratTOCAD);
+    
+    ICurrencyStrategy currencyStratTOUSD = new CADToUSD();
+    CurrecnyStrategyContext cuurrencyContextToUSD = new CurrecnyStrategyContext(currencyStratTOUSD);
             
     public Report(String locationTracking, int energyConsumption,
             List<String> transitMaintenance, HashMap<String, String> operatorPerformance,
@@ -257,14 +265,21 @@ public class Report {
         }
         
         if (lightRailDTO != null && !lightRailDTO.isEmpty()){
+            //if mode is sth do usd to cad else do otherwise
+            
+            
+            
+            
             for (VehicleDTO vehicleDTO : vehicleDTOList){
                if (vehicleDTO instanceof LightRailDTO lightRailDTO){
                    float remainBatt = ( lightRailDTO.getBatteryAmount() / lightRailDTO.getMaxBattery()) * 100;
                    float costToRecharge = ((lightRailDTO.getMaxBattery() - lightRailDTO.getBatteryAmount()) * BATTERY_PRICE) / 100;
                    
+                   costToRecharge  = (float) cuurrencyContextToUSD.currencyConvertor(costToRecharge);
+                   
                    htmlElements.add("<p><strong>Light Rail Number:</strong> " + lightRailDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
                  "<strong>Remaining Battery:</strong> " + remainBatt + "% &nbsp; | &nbsp; " +
-                 "<strong>Cost to recharge:</strong> " + costToRecharge + "$</p>");
+                 "<strong>Cost to recharge:</strong> " + costToRecharge + "</p>");
 
                } else {
                    System.out.println("\nOOOPS\n");

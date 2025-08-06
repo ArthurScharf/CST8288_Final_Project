@@ -109,6 +109,7 @@ public class ReportBuilder {
         return this;
     }
     
+    
     public ReportBuilder addLightRailDTO (ArrayList<VehicleDTO> lightRailDTO){
         this.lightRailDTO = lightRailDTO;
         return this;
