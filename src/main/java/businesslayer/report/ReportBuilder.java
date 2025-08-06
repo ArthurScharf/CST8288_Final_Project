@@ -18,19 +18,6 @@ import transportobjects.VehicleDTO;
  * @author Sina Paslar
  */
 public class ReportBuilder {
-    
-    //Fileds are subjected to be chanegd based in the project proccess
-    //DUMMY OBJECTS
-    private String locationTracking;
-    private int energyConsumption;
-    private List<String> transitMaintenance;
-    private HashMap<String, String> operatorPerformance;
-    private double cost;
-    private ICurrencyStrategy currencyStrategy;
-    
-    
-    
-    
     //PROJECT OBJECTS
     private ArrayList<VehicleDTO> vehicleDTOList;
     private VehicleDAO vehicleDAO;
@@ -53,26 +40,7 @@ public class ReportBuilder {
         
     }
     
-    public ReportBuilder addLocationTracking(String locationTracking)
-    {
-        this.locationTracking = locationTracking;
-        return this;
-    }
     
-    public ReportBuilder addEnergyConsumption(int energyConsumption) {
-    this.energyConsumption = energyConsumption;
-    return this;
-    }
-
-    public ReportBuilder addTransitMaintenance(List<String> transitMaintenance) {
-        this.transitMaintenance = transitMaintenance;
-        return this;
-    }
-
-    public ReportBuilder addOperatorPerformance(HashMap<String, String> operatorPerformance) {
-        this.operatorPerformance = operatorPerformance;
-        return this;
-    }
 
 //    public ReportBuilder addCost(double cost, int mode) {
 //        //Choosing between USDToCAD or CADToUSD shoudl be implemented somehow later on
@@ -130,9 +98,7 @@ public class ReportBuilder {
 
     //This method builds a Report object based on the added parameters
     public Report build(){
-        return new Report(locationTracking, energyConsumption,
-            transitMaintenance, operatorPerformance,
-            cost, currencyStrategy, busDTOList, 
+        return new Report(busDTOList, 
                 deiselElectricDTOList, lightRailDTO, mode);
     }
     
