@@ -115,3 +115,21 @@ INSERT INTO MaintenanceTask (Description, Status) VALUES
 
 
 DELETE FROM MAINTENANCETASK;
+
+
+CREATE TABLE Break (
+    BreakID INT auto_increment PRIMARY KEY,
+    OperatorID INT NOT NULL,
+    BreakType ENUM('REST', 'LUNCH', 'EMERGENCY') NOT NULL,
+    Status ENUM('ACTIVE', 'COMPLETED') NOT NULL DEFAULT 'ACTIVE',
+    FOREIGN KEY (OperatorID) REFERENCES Operators(OperatorID)
+);
+
+INSERT INTO Break (OperatorID, BreakType, Status) VALUES
+(1, 'LUNCH', 'COMPLETED'),
+(2, 'REST', 'ACTIVE'),
+(3, 'EMERGENCY', 'COMPLETED'),
+(1, 'REST', 'ACTIVE');
+
+DELETE FROM BREAK;
+

@@ -67,6 +67,10 @@
         <servlet-name>NotificationResponseController</servlet-name>
         <servlet-class>viewlayer.NotificationResponseController</servlet-class>
     </servlet>
+    <servlet>
+    <servlet-name>BreakController</servlet-name>
+    <servlet-class>viewlayer.BreakController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>NotificationResponseController</servlet-name>
         <url-pattern>/NotificationResponseController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>BreakController</servlet-name>
+    <url-pattern>/BreakController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
