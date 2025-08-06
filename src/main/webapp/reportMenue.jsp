@@ -55,10 +55,10 @@
 
         <!-- Radio Buttons for Cost Currency -->
         <label>Cost Currency:</label><br>
-        <input type="radio" id="cad" name="costCurrency" value="USDToCAD">
+        <input type="radio" id="cad" name="costCurrency" value="USDToCAD" checked>
         <label for="cad">From USD To CAD</label><br>
         <input type="radio" id="usd" name="costCurrency" value="CADToUSD">
-        <label for="usd">FORM CAD TO USD</label><br>
+        <label for="usd">From CAD TO USD</label><br>
         
         <!-- Submit Button -->
         <input type="submit" value="Submit Report">

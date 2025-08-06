@@ -113,6 +113,15 @@
                     VehicleDAO dao = new VehicleDAO();
                     ArrayList<VehicleDTO> dieselElectricDTODTOList = dao.getAll();
                     builder.addDeiselElectricDTOList(dieselElectricDTODTOList);
+                    ICurrencyStrategy mode = null;
+                    switch(costMode){
+                    case "USDToCAD": mode =new USDToCAD() ;
+                    break;
+                    case "CADToUSD": mode = new CADToUSD();
+                    break;              
+                    default: mode = new USDToCAD();
+                    }
+                    builder.addMode(mode);
                 
                 
                 }
@@ -120,7 +129,14 @@
                 if (isLightRail){   
                     VehicleDAO dao = new VehicleDAO();
                     ArrayList<VehicleDTO> lightRailDTODTOList = dao.getAll();
-                    ICurrencyStrategy mode = new USDToCAD();
+                    ICurrencyStrategy mode = null;
+                    switch(costMode){
+                    case "USDToCAD": mode =new USDToCAD() ;
+                    break;
+                    case "CADToUSD": mode = new CADToUSD();
+                    break;              
+                    default: mode = new USDToCAD();
+                    }
                     builder.addMode(mode);
                     builder.addLightRailDTO(lightRailDTODTOList);
                     
@@ -131,6 +147,15 @@
                 if (isBusselected){
                     VehicleDAO dao = new VehicleDAO();
                     ArrayList<VehicleDTO> vehicleDTOList = dao.getAll();
+                    ICurrencyStrategy mode = null;
+                    switch(costMode){
+                    case "USDToCAD": mode =new USDToCAD() ;
+                    break;
+                    case "CADToUSD": mode = new CADToUSD();
+                    break;              
+                    default: mode = new USDToCAD();
+                    }
+                    builder.addMode(mode);
                     builder.addBusDTOList(vehicleDTOList);
                 }
                 

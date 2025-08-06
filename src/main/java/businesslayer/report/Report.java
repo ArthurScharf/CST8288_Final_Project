@@ -243,6 +243,8 @@ public class Report {
                             costToRefuel = remainFuel * CNG_PRICE / 100;
                         }
 
+                        CurrecnyStrategyContext cuurrencyContext = new CurrecnyStrategyContext(mode); 
+                        costToRefuel  = (float) cuurrencyContext.currencyConvertor(costToRefuel);
 
                          htmlElements.add("<p><strong>Bus Number:</strong> " + busDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
                        "<strong>Bus Type:</strong> " + busDTO.getResourceType() + " &nbsp; | &nbsp; " +
@@ -267,6 +269,10 @@ public class Report {
 
                 
                 float costToRefuel = (remainFuel * DIESEL_PRICE + remainBattery * BATTERY_PRICE) / 100; 
+                
+                
+                   CurrecnyStrategyContext cuurrencyContext = new CurrecnyStrategyContext(mode); 
+                   costToRefuel  = (float) cuurrencyContext.currencyConvertor(costToRefuel);
 
                 htmlElements.add("<p><strong>Diesel-Electric Number:</strong> " + dieselElectricDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
                                  "<strong>Battery Remaining:</strong> " + String.format("%.2f", remainBattery) + "% &nbsp; | &nbsp; " +
@@ -291,10 +297,8 @@ public class Report {
                    
                    
                    
-                   CurrecnyStrategyContext cuurrencyContextToUSD = new CurrecnyStrategyContext(mode);
-                   
-                   
-                   costToRecharge  = (float) cuurrencyContextToUSD.currencyConvertor(costToRecharge);
+                   CurrecnyStrategyContext cuurrencyContext = new CurrecnyStrategyContext(mode); 
+                   costToRecharge  = (float) cuurrencyContext.currencyConvertor(costToRecharge);
                    
                    htmlElements.add("<p><strong>Light Rail Number:</strong> " + lightRailDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
                  "<strong>Remaining Battery:</strong> " + remainBatt + "% &nbsp; | &nbsp; " +
