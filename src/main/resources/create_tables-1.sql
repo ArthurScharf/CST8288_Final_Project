@@ -94,3 +94,42 @@ DELETE FROM Notification;
 
 
 
+CREATE TABLE MaintenanceTask (
+    TaskID INT auto_increment PRIMARY KEY,
+    Description VARCHAR(255) NOT NULL,
+    Status ENUM('PENDING', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED') NOT NULL
+);
+
+
+INSERT INTO MaintenanceTask (Description, Status) VALUES
+('Inspect and clean HVAC filters in Server Room A', 'PENDING'),
+('Replace faulty power supply in Network Rack 3', 'IN_PROGRESS'),
+('Perform quarterly safety check on forklift FL-001', 'COMPLETED'),
+('Investigate unusual noise from conveyor belt system', 'PENDING'),
+('Scheduled oil change for company vehicle CV-500', 'IN_PROGRESS'),
+('Repair leaky faucet in breakroom bathroom', 'PENDING'),
+('Annual calibration of pressure sensors in Lab 2', 'COMPLETED'),
+('Troubleshoot intermittent printer connectivity issue', 'PENDING'),
+('Replace worn out floor tiles in main hallway', 'CANCELLED'),
+('Software update for inventory management system', 'COMPLETED');
+
+
+DELETE FROM MAINTENANCETASK;
+
+
+CREATE TABLE Break (
+    BreakID INT auto_increment PRIMARY KEY,
+    OperatorID INT NOT NULL,
+    BreakType ENUM('REST', 'LUNCH', 'EMERGENCY') NOT NULL,
+    Status ENUM('ACTIVE', 'COMPLETED') NOT NULL DEFAULT 'ACTIVE',
+    FOREIGN KEY (OperatorID) REFERENCES Operators(OperatorID)
+);
+
+INSERT INTO Break (OperatorID, BreakType, Status) VALUES
+(1, 'LUNCH', 'COMPLETED'),
+(2, 'REST', 'ACTIVE'),
+(3, 'EMERGENCY', 'COMPLETED'),
+(1, 'REST', 'ACTIVE');
+
+DELETE FROM BREAK;
+
