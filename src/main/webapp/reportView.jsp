@@ -4,6 +4,7 @@
     Author     : sina8
 --%>
 
+<%@page import="transportobjects.DieselElectricDTO"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="dataaccesslayer.VehicleDAO"%>
 <%@page import="transportobjects.VehicleDTO"%>
@@ -105,19 +106,31 @@
                     builder.addCost(10, mode);
                 }
                 
-                if (isVehicleSelected) {
+                
+                
+                if (isDieselElectric){
                     VehicleDAO dao = new VehicleDAO();
-                    ArrayList<VehicleDTO> vehicleDTOList = dao.getAll();
-
-                    builder.addVehicleDTOList(vehicleDTOList);  
+                    ArrayList<VehicleDTO> dieselElectricDTODTOList = dao.getAll();
+                    builder.addDeiselElectricDTOList(dieselElectricDTODTOList);
+                
+                
+                }
+                
+                if (isLightRail){
+                    VehicleDAO dao = new VehicleDAO();
+                    ArrayList<VehicleDTO> lightRailDTODTOList = dao.getAll();
+                    builder.addLightRailDTO(lightRailDTODTOList);
+                
                 }
                 
                 
                 if (isBusselected){
                     VehicleDAO dao = new VehicleDAO();
                     ArrayList<VehicleDTO> vehicleDTOList = dao.getAll();
-                    
+                    builder.addBusDTOList(vehicleDTOList);
                 }
+                
+                
                 
                 repo = builder.build();
                 

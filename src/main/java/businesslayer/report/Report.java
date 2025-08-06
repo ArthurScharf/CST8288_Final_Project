@@ -35,17 +35,17 @@ public class Report {
     private final int CNG_PRICE = 8;
     private final int DIESEL_PRICE = 10;
     
-    private ArrayList<BusDTO> busDTOList;
-    private ArrayList<DieselElectricDTO> deiselElectricDTOList;
-    private ArrayList<LightRailDTO> lightRailDTO;
+    private ArrayList<VehicleDTO> busDTOList;
+    private ArrayList<VehicleDTO> deiselElectricDTOList;
+    private ArrayList<VehicleDTO> lightRailDTO;
 
             
     public Report(String locationTracking, int energyConsumption,
             List<String> transitMaintenance, HashMap<String, String> operatorPerformance,
             double cost, ICurrencyStrategy currencyStrategy,
-            ArrayList<VehicleDTO> vehicleDTOList,  ArrayList<BusDTO> busDTOList,
-            ArrayList<DieselElectricDTO> deiselElectricDTOList,
-            ArrayList<LightRailDTO> lightRailDTO){
+              ArrayList<VehicleDTO> busDTOList,
+            ArrayList<VehicleDTO> deiselElectricDTOList,
+            ArrayList<VehicleDTO> lightRailDTO){
         this.locationTracking = locationTracking;
         this.energyConsumption = energyConsumption;
         this.transitMaintenance = transitMaintenance;
@@ -88,15 +88,15 @@ public class Report {
 
     }
     
-    public ArrayList<BusDTO> getBusDTOList() {
+    public ArrayList<VehicleDTO> getBusDTOList() {
     return busDTOList;
     }
 
-    public ArrayList<DieselElectricDTO> getDeiselElectricDTOList() {
+    public ArrayList<VehicleDTO> getDeiselElectricDTOList() {
         return deiselElectricDTOList;
     }
 
-    public ArrayList<LightRailDTO> getLightRailDTO() {
+    public ArrayList<VehicleDTO> getLightRailDTO() {
         return lightRailDTO;
     }
 
@@ -153,81 +153,86 @@ public class Report {
             return null;
         }
 
-        if (vehicleDTOList != null && !vehicleDTOList.isEmpty()){
-            //TO DO: Implement a method to defferntiate different types of vehicle
-           for (VehicleDTO vehicleDTO : vehicleDTOList){
-               if (vehicleDTO instanceof LightRailDTO lightRailDTO){
-                   float remainBatt = ( lightRailDTO.getBatteryAmount() / lightRailDTO.getMaxBattery()) * 100;
-                   float costToRecharge = ((lightRailDTO.getMaxBattery() - lightRailDTO.getBatteryAmount()) * BATTERY_PRICE) / 100;
-                   
-                   htmlElements.add("<p><strong>Light Rail Number:</strong> " + lightRailDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
-                 "<strong>Remaining Battery:</strong> " + remainBatt + "% &nbsp; | &nbsp; " +
-                 "<strong>Cost to recharge:</strong> " + costToRecharge + "$</p>");
-
-               } else {
-                   System.out.println("\nOOOPS\n");
-               }
-           }
-           for (VehicleDTO vehicleDTO : vehicleDTOList){
-               if (vehicleDTO instanceof BusDTO busDTO){
-                  float remainFuel = busDTO.getResourceAmount() / busDTO.getMaxResource() * 100;
-                  float costToRefuel = 0;
-                  if (busDTO.getResourceType().equalsIgnoreCase("Diesel")){
-                      costToRefuel = remainFuel * DIESEL_PRICE / 100;
-                  } else if (busDTO.getResourceType().equalsIgnoreCase("CNG") ){
-                      costToRefuel = remainFuel * CNG_PRICE / 100;
-                  }
-                   
-                  
-                   htmlElements.add("<p><strong>Bus Number:</strong> " + busDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
-                 "<strong>Bus Type:</strong> " + busDTO.getResourceType() + " &nbsp; | &nbsp; " +
-                 "<strong>Bus Remaining Fuel:</strong> " + remainFuel + "% &nbsp; | &nbsp; " +
-                 "<strong>Cost to Refuel:</strong> " + costToRefuel + "$</p>");
-
-               } else {
-                   System.out.println("\nOOOPS\n");
-               }
-           }
-           for (VehicleDTO vehicleDTO : vehicleDTOList){
-               if (vehicleDTO instanceof DieselElectricDTO dieselElectricDTO){
-                  
-                float remainBattery = (dieselElectricDTO.getBatteryAmount() / dieselElectricDTO.getMaxBattery()) * 100;
-                float remainFuel = (dieselElectricDTO.getFuelAmount() / dieselElectricDTO.getMaxFuel()) * 100;
-
-                
-                float costToRefuel = (remainFuel * DIESEL_PRICE + remainBattery * BATTERY_PRICE) / 100; 
-
-                htmlElements.add("<p><strong>Diesel-Electric Number:</strong> " + dieselElectricDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
-                                 "<strong>Battery Remaining:</strong> " + String.format("%.2f", remainBattery) + "% &nbsp; | &nbsp; " +
-                                 "<strong>Fuel Remaining:</strong> " + String.format("%.2f", remainFuel) + "% &nbsp; | &nbsp; " +
-                                 "<strong>Cost to Refuel:</strong> " + String.format("%.2f", costToRefuel) + "$</p>");
-               } else {
-                   System.out.println("\nOOOPS\n");
-               }
-           }
-
-        }
+//        if (vehicleDTOList != null && !vehicleDTOList.isEmpty()){
+//            //TO DO: Implement a method to defferntiate different types of vehicle
+//           for (VehicleDTO vehicleDTO : vehicleDTOList){
+//               if (vehicleDTO instanceof LightRailDTO lightRailDTO){
+//                   float remainBatt = ( lightRailDTO.getBatteryAmount() / lightRailDTO.getMaxBattery()) * 100;
+//                   float costToRecharge = ((lightRailDTO.getMaxBattery() - lightRailDTO.getBatteryAmount()) * BATTERY_PRICE) / 100;
+//                   
+//                   htmlElements.add("<p><strong>Light Rail Number:</strong> " + lightRailDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
+//                 "<strong>Remaining Battery:</strong> " + remainBatt + "% &nbsp; | &nbsp; " +
+//                 "<strong>Cost to recharge:</strong> " + costToRecharge + "$</p>");
+//
+//               } else {
+//                   System.out.println("\nOOOPS\n");
+//               }
+//           }
+//           for (VehicleDTO vehicleDTO : vehicleDTOList){
+//               if (vehicleDTO instanceof BusDTO busDTO){
+//                  float remainFuel = busDTO.getResourceAmount() / busDTO.getMaxResource() * 100;
+//                  float costToRefuel = 0;
+//                  if (busDTO.getResourceType().equalsIgnoreCase("Diesel")){
+//                      costToRefuel = remainFuel * DIESEL_PRICE / 100;
+//                  } else if (busDTO.getResourceType().equalsIgnoreCase("CNG") ){
+//                      costToRefuel = remainFuel * CNG_PRICE / 100;
+//                  }
+//                   
+//                  
+//                   htmlElements.add("<p><strong>Bus Number:</strong> " + busDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
+//                 "<strong>Bus Type:</strong> " + busDTO.getResourceType() + " &nbsp; | &nbsp; " +
+//                 "<strong>Bus Remaining Fuel:</strong> " + remainFuel + "% &nbsp; | &nbsp; " +
+//                 "<strong>Cost to Refuel:</strong> " + costToRefuel + "$</p>");
+//
+//               } else {
+//                   System.out.println("\nOOOPS\n");
+//               }
+//           }
+//           for (VehicleDTO vehicleDTO : vehicleDTOList){
+//               if (vehicleDTO instanceof DieselElectricDTO dieselElectricDTO){
+//                  
+//                float remainBattery = (dieselElectricDTO.getBatteryAmount() / dieselElectricDTO.getMaxBattery()) * 100;
+//                float remainFuel = (dieselElectricDTO.getFuelAmount() / dieselElectricDTO.getMaxFuel()) * 100;
+//
+//                
+//                float costToRefuel = (remainFuel * DIESEL_PRICE + remainBattery * BATTERY_PRICE) / 100; 
+//
+//                htmlElements.add("<p><strong>Diesel-Electric Number:</strong> " + dieselElectricDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
+//                                 "<strong>Battery Remaining:</strong> " + String.format("%.2f", remainBattery) + "% &nbsp; | &nbsp; " +
+//                                 "<strong>Fuel Remaining:</strong> " + String.format("%.2f", remainFuel) + "% &nbsp; | &nbsp; " +
+//                                 "<strong>Cost to Refuel:</strong> " + String.format("%.2f", costToRefuel) + "$</p>");
+//               } else {
+//                   System.out.println("\nOOOPS\n");
+//               }
+//           }
+//
+//        }
         
         if (busDTOList != null && !busDTOList.isEmpty()){
            for (VehicleDTO vehicleDTO : vehicleDTOList){
                if (vehicleDTO instanceof BusDTO busDTO){
-                  float remainFuel = busDTO.getResourceAmount() / busDTO.getMaxResource() * 100;
-                  float costToRefuel = 0;
-                  if (busDTO.getResourceType().equalsIgnoreCase("Diesel")){
-                      costToRefuel = remainFuel * DIESEL_PRICE / 100;
-                  } else if (busDTO.getResourceType().equalsIgnoreCase("CNG") ){
-                      costToRefuel = remainFuel * CNG_PRICE / 100;
-                  }
-                   
-                  
-                   htmlElements.add("<p><strong>Bus Number:</strong> " + busDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
-                 "<strong>Bus Type:</strong> " + busDTO.getResourceType() + " &nbsp; | &nbsp; " +
-                 "<strong>Bus Remaining Fuel:</strong> " + remainFuel + "% &nbsp; | &nbsp; " +
-                 "<strong>Cost to Refuel:</strong> " + costToRefuel + "$</p>");
+//                   String type = busDTO.serialize().substring(0, 3);
+//                   if (type.equalsIgnoreCase("Bus")){
+                       float remainFuel = busDTO.getResourceAmount() / busDTO.getMaxResource() * 100;
+                       float costToRefuel = 0;
+                        if (busDTO.getResourceType().equalsIgnoreCase("Diesel")){
+                            costToRefuel = remainFuel * DIESEL_PRICE / 100;
+                        } else if (busDTO.getResourceType().equalsIgnoreCase("CNG") ){
+                            costToRefuel = remainFuel * CNG_PRICE / 100;
+                        }
 
-               } else {
-                   System.out.println("\nOOOPS\n");
-               }
+
+                         htmlElements.add("<p><strong>Bus Number:</strong> " + busDTO.getVehicleNumber() + " &nbsp; | &nbsp; " +
+                       "<strong>Bus Type:</strong> " + busDTO.getResourceType() + " &nbsp; | &nbsp; " +
+                       "<strong>Bus Remaining Fuel:</strong> " + remainFuel + "% &nbsp; | &nbsp; " +
+                       "<strong>Cost to Refuel:</strong> " + costToRefuel + "$</p>");
+
+                     } else {
+                         System.out.println("\nOOOPS\n");
+                     }
+                       
+//                   }
+                  
            }
         }
         

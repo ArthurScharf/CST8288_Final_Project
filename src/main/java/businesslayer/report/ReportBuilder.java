@@ -34,9 +34,9 @@ public class ReportBuilder {
     private ArrayList<VehicleDTO> vehicleDTOList;
     private VehicleDAO vehicleDAO;
     
-    private ArrayList<BusDTO> busDTOList;
-    private ArrayList<DieselElectricDTO> deiselElectricDTOList;
-    private ArrayList<LightRailDTO> lightRailDTO;
+    private ArrayList<VehicleDTO> busDTOList;
+    private ArrayList<VehicleDTO> deiselElectricDTOList;
+    private ArrayList<VehicleDTO> lightRailDTO;
 
 
     
@@ -99,17 +99,17 @@ public class ReportBuilder {
         return this;
     }
     
-    public ReportBuilder addBusDTOList(ArrayList<BusDTO> busDTOList){
+    public ReportBuilder addBusDTOList(ArrayList<VehicleDTO> busDTOList){
         this.busDTOList = busDTOList;
         return this;
     }
     
-    public ReportBuilder addDeiselElectricDTOList (ArrayList<DieselElectricDTO> deiselElectricDTOList){
+    public ReportBuilder addDeiselElectricDTOList (ArrayList<VehicleDTO> deiselElectricDTOList){
         this.deiselElectricDTOList = deiselElectricDTOList;
         return this;
     }
     
-    public ReportBuilder addLightRailDTO (ArrayList<LightRailDTO> lightRailDTO){
+    public ReportBuilder addLightRailDTO (ArrayList<VehicleDTO> lightRailDTO){
         this.lightRailDTO = lightRailDTO;
         return this;
     }
@@ -126,7 +126,7 @@ public class ReportBuilder {
     public Report build(){
         return new Report(locationTracking, energyConsumption,
             transitMaintenance, operatorPerformance,
-            cost, currencyStrategy, vehicleDTOList, busDTOList, 
+            cost, currencyStrategy, busDTOList, 
                 deiselElectricDTOList, lightRailDTO);
     }
     
