@@ -21,10 +21,11 @@ String role = (obj == null) ? null : (String)obj;
     </head>
     <header class="banner">
     <nav>
-        <a href="home">Home</a>
         <%if ("Manager".equals(role)) { %> <%-- Are we logged in? --%>
+            <a href="home">Notifications</a>
             <a href="VehicleController">Vehicles</a>
             <a href="reporttest.jsp">Reports</a>
+            <a href="maintenance">Maintenance</a>
         <%} else if ("Operator".equals(role)) { %>
             <a>Operator Actions</a>
         <%} else {%>

@@ -5,8 +5,9 @@
 package observer;
 
 import dataaccesslayer.NotificationDAO;
-import dataaccesslayer.NotificationType;
+import transportobjects.NotificationType;
 import transportobjects.NotificationDTO;
+import transportobjects.VehicleDTO;
 
 /**
  * An Observer class to create notification objects. These notifications are stored
@@ -16,10 +17,23 @@ import transportobjects.NotificationDTO;
  */
 public class Observer 
 {
+    /**
+     * Publisher this observer is registered to. Is is the responsibility of this observer
+     * to construct the notification it creates, so it needs this context
+     */
+    protected VehicleDTO vcl;
+    
+    
+    protected Observer(VehicleDTO vcl)
+    {
+        this.vcl = vcl;
+    }
     
     /**
      * Creates a NotificationDTO using the data that pertains the the event that
      * triggered the Observer
+     * 
+     * @deprecated Migrating code to child classes
      * 
      * @param type Type of notification to be created
      * @param data String representation of the data relevant to the event. Stored in database

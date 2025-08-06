@@ -22,10 +22,6 @@
             Report repo = Report.builder().addCost(10, 1).addEnergyConsumption(20).addLocationTracking("Point 1").build();
             double cost = repo.getCost();
             out.println("<p> cost: "+ cost + "</p>");
-            
-            
-            
-            
             %>
         
         

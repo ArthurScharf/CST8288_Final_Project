@@ -4,6 +4,10 @@
  */
 package transportobjects;
 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * String storage convention: "type|batteryAmount|maxBattery|fuelAmount|maxFuel"
  * @author Mike Sharpe
@@ -11,6 +15,10 @@ package transportobjects;
 public class DieselElectricDTO extends VehicleDTO
 {
 
+    private static final float dieselElectricSpeed = 18.f;
+    private static final float batteryConsumptionRate = 0.00002f;
+    private static final float fuelConsumptionRate = 0.000015f;
+    
     private float batteryAmount;
     private float maxBattery;
     private float fuelAmount;
@@ -19,6 +27,8 @@ public class DieselElectricDTO extends VehicleDTO
     public DieselElectricDTO()
     {
         super();
+        super.vehicleSpeed = dieselElectricSpeed;
+        super.setMaintainanceDistance(12000);
         batteryAmount = -1;
         maxBattery = -1;
     }
@@ -70,4 +80,29 @@ public class DieselElectricDTO extends VehicleDTO
                 + fuelAmount + "|"
                 + maxFuel;
     }
+    
+    
+    @Override
+    public void updateResourceConsumption(float deltaSeconds)
+    {
+        batteryAmount = Math.clamp(batteryAmount - (batteryConsumptionRate * deltaSeconds), 0.f, maxBattery);
+        if ( (batteryAmount / maxBattery) <= 0.25 )
+        {
+            try {
+                fuelObserver.update();
+            } catch (Exception ex) {
+                Logger.getLogger(DieselElectricDTO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        batteryAmount -= Math.clamp(fuelAmount - (fuelConsumptionRate * deltaSeconds), 0.f, maxFuel);
+        if ( (fuelAmount / maxFuel) <= 0.25 )
+        {
+            try {
+                fuelObserver.update();
+            } catch (Exception ex) {
+                Logger.getLogger(DieselElectricDTO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//~ updateResourceConsumption(...)
+
 }
