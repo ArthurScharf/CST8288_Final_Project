@@ -26,6 +26,7 @@ String role = (obj == null) ? null : (String)obj;
             <a href="VehicleController">Vehicles</a>
             <a href="reportMenue.jsp">Reports</a>
             <a href="maintenance">Maintenance</a>
+            <a href="GPSController">GPS Tracking</a>
         <%} else if ("Operator".equals(role)) { %>
             <a href="BreakController">Breaks</a>
         <%} else {%>

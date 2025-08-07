@@ -35,7 +35,7 @@ INSERT INTO Vehicle (VehicleNumber, TypeInfo, MaximumPassengers, RouteID, TotalD
 
 SELECT * FROM Vehicle;
 
-DELETE FROM Vehicle;
+
 
 
 
