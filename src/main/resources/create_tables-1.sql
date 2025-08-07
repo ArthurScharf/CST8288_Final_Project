@@ -133,3 +133,25 @@ INSERT INTO Break (OperatorID, BreakType, Status) VALUES
 
 DELETE FROM BREAK;
 
+CREATE TABLE Stops (
+
+    ID INT NOT NULL AUTO_INCREMENT,
+    Coordinates POINT NOT NULL,
+    StopName VARCHAR(40) NOT NULL,
+
+    PRIMARY KEY (ID)
+);
+
+INSERT INTO Stops (StopName, Coordinates) VALUES
+    ('Main Street & Oak Ave', ST_PointFromText('POINT(-75.1652 39.9525)')),
+    ('Central Park West Station', ST_PointFromText('POINT(-73.9733 40.7813)')),
+    ('Sunset Boulevard & Vine St', ST_PointFromText('POINT(-118.3276 34.0978)')),
+    ('Market Street & 3rd St', ST_PointFromText('POINT(-122.4011 37.7877)')),
+    ('North Avenue & Damen', ST_PointFromText('POINT(-87.6775 41.9103)')),
+    ('South Congress & Barton Springs', ST_PointFromText('POINT(-97.7479 30.2612)')),
+    ('Ponce de Leon Ave & Peachtree St', ST_PointFromText('POINT(-84.3820 33.7709)')),
+    ('Mass Ave & Boylston St', ST_PointFromText('POINT(-71.0858 42.3486)')),
+    ('16th Street Mall & Curtis St', ST_PointFromText('POINT(-104.9922 39.7490)')),
+    ('Broadway & Pine St', ST_PointFromText('POINT(-122.3218 47.6148)'));
+
+
