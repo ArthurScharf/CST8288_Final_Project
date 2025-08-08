@@ -29,12 +29,23 @@
     <title>Transit Report View</title>
     <!-- Tailwind CSS for quick styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to center the tables */
+        .report-table {
+            margin: 0 auto;
+            text-align: center;
+        }
+        .report-table th, .report-table td {
+            text-align: center;
+            padding: 8px 12px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
     <jsp:include page="/WEB-INF/views/header.jsp"/>
     <div class="max-w-5xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-md">
         <h1 class="text-3xl font-bold mb-6 text-center">Transit Report</h1>
-        <div class="space-y-4">
+        <div class="space-y-6">
             <%
                 // Create a ReportBuilder using a static builder() factory on Report.
                 ReportBuilder builder = Report.builder();
@@ -103,7 +114,13 @@
                 // Generate HTML lines from the report and write them to the response.
                 List<String> htmlLines = repo.toHTML();
                 for (String line : htmlLines) {
-                    out.println("<div class='mb-4 p-4 bg-gray-100 rounded shadow'>" + line + "</div>");
+                    out.println("<div class='mb-6 p-6 bg-gray-50 rounded-lg shadow text-center'>");
+                    out.println("<div class='report-table-container'>");
+                    // Replace table tags to add centering classes
+                    String centeredLine = line.replaceAll("<table", "<table class='report-table'");
+                    out.println(centeredLine);
+                    out.println("</div>");
+                    out.println("</div>");
                 }
             %>
         </div>

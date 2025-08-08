@@ -204,7 +204,7 @@ public class Report {
         // ===== Diesel-Electric Train Report =====
         if (deiselElectricDTOList != null && !deiselElectricDTOList.isEmpty()) {
             StringBuilder tableBuilder = new StringBuilder();
-            sum = 0;
+            float totalDieselElectricCost = 0; // Renamed for clarity
 
             tableBuilder.append("<table border='1' cellpadding='5' cellspacing='0'>");
             tableBuilder.append("<tr><th colspan='4'>Diesel-Electric Train Report</th></tr>");
@@ -221,10 +221,10 @@ public class Report {
                     float remainFuel = (dieselElectricDTO.getFuelAmount() / dieselElectricDTO.getMaxFuel()) * 100;
 
                     float costToRefuel = (remainFuel * DIESEL_PRICE + remainBattery * BATTERY_PRICE) / 100;
-                    sum += costToRefuel;
 
                     CurrecnyStrategyContext currencyContext = new CurrecnyStrategyContext(mode);
                     costToRefuel = (float) currencyContext.currencyConvertor(costToRefuel);
+                    totalDieselElectricCost += costToRefuel; // Add converted cost to total
 
                     tableBuilder.append("<tr>")
                             .append("<td>").append(dieselElectricDTO.getVehicleNumber()).append("</td>")
@@ -236,7 +236,7 @@ public class Report {
             }
 
             tableBuilder.append("<tr><td colspan='3'><strong>Total Refuel Cost</strong></td>")
-                    .append("<td><strong>").append(String.format("%.2f", sum)).append("</strong></td></tr>")
+                    .append("<td><strong>").append(String.format("%.2f", totalDieselElectricCost)).append("</strong></td></tr>") // Use converted total
                     .append("</table><br>");
             htmlElements.add(tableBuilder.toString());
         }
