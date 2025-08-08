@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
+    <jsp:include page="/WEB-INF/views/header.jsp"/>
     <div class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-6 text-center">Transit Report Form</h2>
         <form action="${pageContext.request.contextPath}/reportView.jsp" method="post" class="space-y-6">
