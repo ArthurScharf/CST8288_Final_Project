@@ -33,6 +33,8 @@ public class Observer
      * Creates a NotificationDTO using the data that pertains the the event that
      * triggered the Observer
      * 
+     * This should be abstract, but I'm not changing it last minute
+     * 
      * @deprecated Migrating code to child classes
      * 
      * @param type Type of notification to be created

@@ -1,7 +1,7 @@
-<%--
-    Document    : vehicleTest
+<%-- 
+    Document   : vehicleTest
     Created on : Jul 25, 2025, 5:26:15 PM
-    Author      : Arthur Scharf
+    Author     : Arthur Scharf
 --%>
 
 <%@page import="transportobjects.VehicleDTO"%>
@@ -46,7 +46,6 @@
                 padding: 20px;
                 border-radius: 8px;
                 background-color: #f9fafb; /* Lighter background for panels */
-                /* Corrected typo in box-shadow: '2px' instead of '2px' */
                 box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
                 min-height: 400px; /* Minimum height for panels */
                 display: flex;
@@ -69,7 +68,7 @@
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
                 text-align: left; /* Added this line to ensure left justification */
             }
-             
+            
             .vehicle-card p {
                 margin-bottom: 5px;
                 font-size: 0.95em;
@@ -117,8 +116,14 @@
         </style>
     </head>
     <body>
+        <%
+            // --- ADD THESE LINES TO PREVENT CACHING ---
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+            response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+            response.setHeader("Expires", "0"); // Proxies
+            // --- END CACHE CONTROL ---
+        %>
         <jsp:include page="/WEB-INF/views/header.jsp" />
-        <!-- Removed deprecated <center> tag, as flexbox handles centering -->
         <div class="main-content-wrapper">
             <!-- Left Side: Vehicle List -->
             <div class="panel vehicle-list-panel">
@@ -155,20 +160,24 @@
                 <form action="VehicleController" method="POST" class="space-y-4">
                     <div class="form-group">
                         <label for="vehicleNumber">Vehicle Number:</label>
-                        <input type="text" id="vehicleNumber" name="vehicleNumber" required class="focus:ring-blue-500 focus:border-blue-500">
+                        <input type="text" id="vehicleNumber" name="vehicleNumber" required class="focus:ring-blue-500 focus:border-blue-500 rounded-md">
                     </div>
                     <div class="form-group">
                         <label for="vehicleType">Vehicle Type:</label>
-                        <input type="text" id="vehicleType" name="vehicleType" required class="focus:ring-blue-500 focus:border-blue-500">
+                        <select id="vehicleType" name="vehicleType" required class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <option value="Bus">Bus</option>
+                            <option value="DieselElectric">Diesel Electric</option>
+                            <option value="LightRail">Light Rail</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="maxPassengers">Max Passengers:</label>
-                        <input type="number" id="maxPassengers" name="maxPassengers" min="1" required class="focus:ring-blue-500 focus:border-blue-500">
+                        <input type="number" id="maxPassengers" name="maxPassengers" min="1" required class="focus:ring-blue-500 focus:border-blue-500 rounded-md">
                     </div>
-                    <button type="submit" class="submit-button">Add Vehicle</button>                   
+                    <button type="submit" class="submit-button rounded-md">Add Vehicle</button>
                 </form>
-                <form action="VehicleController/undo" method="POST">
-                    <button type="submit" class="submit-button">Undo</button>                 
+                <form action="VehicleController/undo" method="POST" class="mt-4">
+                    <button type="submit" class="submit-button rounded-md">Undo</button>
                 </form>
             </div>
         </div>

@@ -36,7 +36,6 @@ INSERT INTO Vehicle (VehicleNumber, TypeInfo, MaximumPassengers, RouteID, TotalD
 ('V020', 'LightRail|168.0|238.0', 108, 207, 40500.00);
 
 
-
 DROP TABLE IF EXISTS Operators;
 
 CREATE TABLE Operators (
@@ -72,17 +71,7 @@ CREATE TABLE Notification (
 );
 
 
-INSERT INTO Notification (Type, Data) VALUES
-('MAINTENANCE', 'Scheduled engine check for Unit 101 on 2025-08-15.'),
-('FUEL', 'Low fuel alert for Vehicle 205. Refuel immediately.'),
-('BREAK', 'Brake system inspection due for Train 303. Urgent.'),
-('UNKNOWN', 'Unidentified sensor anomaly detected in Sector Alpha.'),
-('MAINTENANCE', 'Routine tire rotation completed for Bus 401.'),
-('FUEL', 'Fuel tank #3 is at 75% capacity. Replenish soon.'),
-('BREAK', 'Emergency stop initiated by Boat 502. Investigating.'),
-('UNKNOWN', 'System diagnostic inconclusive for Network Node 007.'),
-('MAINTENANCE', 'Annual service for HVAC system in Building C.'),
-('FUEL', 'High fuel consumption detected in Fleet Vehicle 604.');
+
 
 
 DROP TABLE IF EXISTS MaintenanceTask;
@@ -94,17 +83,6 @@ CREATE TABLE MaintenanceTask (
 );
 
 
-INSERT INTO MaintenanceTask (Description, Status) VALUES
-('Inspect and clean HVAC filters in Server Room A', 'PENDING'),
-('Replace faulty power supply in Network Rack 3', 'IN_PROGRESS'),
-('Perform quarterly safety check on forklift FL-001', 'COMPLETED'),
-('Investigate unusual noise from conveyor belt system', 'PENDING'),
-('Scheduled oil change for company vehicle CV-500', 'IN_PROGRESS'),
-('Repair leaky faucet in breakroom bathroom', 'PENDING'),
-('Annual calibration of pressure sensors in Lab 2', 'COMPLETED'),
-('Troubleshoot intermittent printer connectivity issue', 'PENDING'),
-('Replace worn out floor tiles in main hallway', 'CANCELLED'),
-('Software update for inventory management system', 'COMPLETED');
 
 DROP TABLE IF EXISTS Break;
 
@@ -115,13 +93,6 @@ CREATE TABLE Break (
     Status ENUM('ACTIVE', 'COMPLETED') NOT NULL DEFAULT 'ACTIVE',
     FOREIGN KEY (OperatorID) REFERENCES Operators(OperatorID)
 );
-
-
-INSERT INTO Break (OperatorID, BreakType, Status) VALUES
-(1, 'LUNCH', 'COMPLETED'),
-(2, 'REST', 'ACTIVE'),
-(3, 'EMERGENCY', 'COMPLETED'),
-(1, 'REST', 'ACTIVE');
 
 
 DROP TABLE IF EXISTS Stops;

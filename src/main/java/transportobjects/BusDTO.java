@@ -113,4 +113,9 @@ public class BusDTO extends VehicleDTO
             }
         }
     }//~ updateResourceConsumption(...);
+    
+    public static String getInitialTypeInfo()
+    {
+        return "Bus|Diesel|1000.0|1000.0";
+    }
 }

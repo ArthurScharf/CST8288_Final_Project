@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -36,6 +38,12 @@ public class VehicleController extends HttpServlet
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
+        response.setHeader("Cache-Control", "no-cache, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+        
+        
+        
         // -- Dummy distance change code for vehicles changes distances -- //
         ServletContext context = request.getServletContext();
         try {
@@ -100,6 +108,7 @@ public class VehicleController extends HttpServlet
             try {
                 Object obj = request.getSession(false).getAttribute("UndoCreateVehicle");
                 if (obj == null){
+                    System.out.println("VehicleController::doPost -- UndoCreateVehicle was null");
                     request.getServletContext().getNamedDispatcher("VehicleController").forward(request, response);
                     return;
                 }
@@ -107,6 +116,7 @@ public class VehicleController extends HttpServlet
                 UndoCreateVehicle undo = (UndoCreateVehicle)obj;
                 undo.execute();
                 request.getServletContext().getNamedDispatcher("VehicleController").forward(request, response);
+                request.getServletContext().setAttribute("UndoCreateVehicle", null);
                 return;
             } catch (ClassCastException | UndoException e) {
                 request.getServletContext().setAttribute("errorMessage", e.getMessage());
@@ -118,38 +128,38 @@ public class VehicleController extends HttpServlet
          // TODO: Fix this to properly add vehicles
         
         // -- Creating new vehicle -- //
-//        String vehicleNumber = request.getParameter("vehicleNumber");
-//        // int    maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
-//        VehicleDTO vcl = VehicleService.createVehicle(
-//                vehicleNumber, 
-//                0, 
-//                0, 
-//                0, 
-//                pathInfo
-//        );
-//        vcl.setVehicleNumber(vehicleNumber);
-        // vcl.setMaximumPassengers(maxPassengers);
+        String vehicleNumber = request.getParameter("vehicleNumber");
+        int maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
+        String vehicleType = request.getParameter("vehicleType");
+        
+        String typeInfo = VehicleService.getInitialTypeInfo(vehicleType);
+        
+        try {            
+            VehicleDTO vcl = VehicleService.createVehicle(
+                    vehicleNumber,
+                    maxPassengers,
+                    0,
+                    0,
+                    typeInfo
+            );
+            
+            // -- Creating Record in Database -- //
+            VehicleDAO dao = new VehicleDAO();
+            dao.create(vcl, typeInfo);
+
+            // -- Creating undo command -- //
+            UndoCreateVehicle undo = new UndoCreateVehicle(vcl);
+            request.getSession(false).setAttribute("UndoCreateVehicle", undo);
+
+            request.getServletContext().getNamedDispatcher("home").forward(request, response);
+            return;
+        } catch (Exception ex) {
+            Logger.getLogger(VehicleController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         
     
-        // -- Creating Record in Database -- //
-//        VehicleDAO dao = new VehicleDAO();
-//        
-//        try {
-//            dao.create(vcl, "Bus|CNG|200|300");
-//        } catch (SQLException e)
-//        {
-//            request.getServletContext().setAttribute("errorMessage", "Exception VehicleController::doGet -- " + e.getMessage());
-//            request.getServletContext().getNamedDispatcher("error").forward(request, response);
-//            return;
-//        }
-//        
-//        // -- Creating undo command -- //
-//        // TODO: Prevent this controller serving if user isn't logged in
-//        UndoCreateVehicle undo = new UndoCreateVehicle(vcl);
-//        request.getSession(false).setAttribute("UndoCreateVehicle", undo);
-        
-        request.getServletContext().getNamedDispatcher("home").forward(request, response);
-        return;
+
     }
 
     /**
@@ -158,7 +168,8 @@ public class VehicleController extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo() 
+    {
         return "Short description";
     }// </editor-fold>
 }

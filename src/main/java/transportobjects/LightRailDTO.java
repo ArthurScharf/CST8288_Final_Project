@@ -71,4 +71,10 @@ public class LightRailDTO extends VehicleDTO
             }
         }
     }
+    
+    
+    public static String getInitialTypeInfo()
+    {        
+        return "LightRail|100.0|100.0";
+    }
 }

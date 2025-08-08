@@ -85,7 +85,6 @@ public class VehicleService
                 return dto;
             }
             case("LightRail") -> {
-                System.out.print("\nAttempt Create LightRail\n");
                 LightRailDTO dto = new LightRailDTO();
                 initVehicle(dto, vehicleNumber, maxPassengers, routeID, totalDistanceTraveled);
                 try
@@ -135,5 +134,21 @@ public class VehicleService
         dto.setMaximumPassengers(maxPassengers);
         dto.setRouteID(routeID);
         dto.setTotalDistanceTraveled(totalDistanceTraveled);
-    }   
+    }
+    
+    public static String getInitialTypeInfo(String vehicleType)
+    {
+        switch (vehicleType)
+        {
+            case("Bus") -> {
+                return BusDTO.getInitialTypeInfo();
+            } case ("DieselEletric") -> {
+                return DieselElectricDTO.getInitialTypeInfo();
+            } case ("LightRail") -> {
+                return LightRailDTO.getInitialTypeInfo();
+            } default -> {
+                return "OOPS"; // Didn't have time to finish this logic properly
+            }
+        }
+    }
 }

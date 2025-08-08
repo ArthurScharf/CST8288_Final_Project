@@ -105,4 +105,10 @@ public class DieselElectricDTO extends VehicleDTO
         }
     }//~ updateResourceConsumption(...)
 
+        
+    public static String getInitialTypeInfo()
+    {
+        return "DieselEletric|100.0|100.0|1000.0|1000.0";
+    }
+    
 }
