@@ -90,6 +90,10 @@ public class BreakDAO implements BreakDAOInterface {
         return breaks.isEmpty() ? null : breaks;
     }
 
+    /**
+     * @param dto break to create
+     * @throws SQLException 
+     */
     @Override
     public void create(BreakDTO dto) throws SQLException {
         String query = "INSERT INTO Break (OperatorID, BreakType, Status) VALUES (?, ?, ?)";
@@ -113,7 +117,7 @@ public class BreakDAO implements BreakDAOInterface {
 
     /**
      * Creates a new break record in the database
-     * @param dto the break data to create
+     * @param breakId 
      * @throws SQLException if database error occurs
      */
     @Override

@@ -90,7 +90,7 @@ public class GenerateTime {
     
     /**
      * Generates a random time for arrival
-     * @return random time as string in HH:mm:ss format
+     * @return random time as string in hour:minute:seconds format
      */
     private String generateRandomTime() {
         LocalTime now = LocalTime.now();
